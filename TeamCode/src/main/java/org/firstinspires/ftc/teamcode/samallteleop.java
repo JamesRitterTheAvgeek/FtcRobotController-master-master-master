@@ -14,7 +14,7 @@ public class samallteleop extends LinearOpMode {
     private DcMotor MotorFrontRight;
     private DcMotor MotorBackLeft;
     private DcMotor MotorBackRight;
-    private DcMotor Liftleft;
+    //private DcMotor Liftleft;
     //arm
     private Servo armServo;
     private Servo rotateServo;
@@ -57,7 +57,7 @@ private static final double CLAW_UP = -1;
         MotorFrontRight = hardwareMap.dcMotor.get("MotorFrontRight");
         MotorBackLeft = hardwareMap.dcMotor.get("MotorBackLeft");
         MotorBackRight = hardwareMap.dcMotor.get("MotorBackRight");
-        Liftleft = hardwareMap.dcMotor.get("Liftleft");
+        //Liftleft = hardwareMap.dcMotor.get("Liftleft");
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -69,7 +69,7 @@ private static final double CLAW_UP = -1;
 
 
         armServo.setPosition(ARM_RETRACTED_POSITION);
-        rotateServo.setPosition(CLAW_NEUTURAL);
+        //rotateServo.setPosition(CLAW_NEUTURAL);
 
         waitForStart();
 
@@ -117,10 +117,10 @@ private static final double CLAW_UP = -1;
 
             //stupid slide stuff
 
-            if (gamepad2.left_stick_y > 0.1)
-            {
-                Liftleft.setPower(gamepad2.left_stick_y / 5);
-            }
+            //if (gamepad2.left_stick_y > 0.1)
+            //{
+               // Liftleft.setPower(gamepad2.left_stick_y / 5);
+            //}
         }
     }
 }

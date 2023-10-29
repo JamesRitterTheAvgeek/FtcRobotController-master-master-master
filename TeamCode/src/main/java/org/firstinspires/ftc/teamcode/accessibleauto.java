@@ -31,39 +31,93 @@ public class accessibleauto extends LinearOpMode {
         MotorBackLeft = hardwareMap.dcMotor.get("MotorBackLeft");
         MotorBackRight = hardwareMap.dcMotor.get("MotorBackRight");
         MotorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
-        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // Turn the motor back on when we are done
-        double leftPosition= MotorBackLeft.getCurrentPosition();
-        double rightPosition=MotorBackRight.getCurrentPosition();
-
+        MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+        MotorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+// Turn the motor back on when we are done
+        double x=0;
+        double y=0;
+        double leftPosition=0;
+        double rightPosition=0;
         telemetry.update();
         waitForStart();
 
-        while (true) {
+        while (opModeIsActive()) {
             // Get the current position of the motor
-            while (true) {
+          /*  while (true) {
+                 leftPosition= MotorBackLeft.getCurrentPosition();
+                 rightPosition=MotorBackRight.getCurrentPosition();
+                x=leftPosition;
+                y=rightPosition;
                 telemetry.addData("EncoderL Position", leftPosition);
                 telemetry.addData("EncoderR Position", rightPosition);
                 telemetry.update();
                 MotorBackLeft.setPower(-0.8);
-                telemetry.addData("EncoderL Position", leftPosition);
-                telemetry.addData("EncoderR Position", rightPosition);
-                telemetry.update();
                 MotorBackRight.setPower(0.8);
+                leftPosition= MotorBackLeft.getCurrentPosition();
+                rightPosition=MotorBackRight.getCurrentPosition();
                 telemetry.addData("EncoderL Position", leftPosition);
                 telemetry.addData("EncoderR Position", rightPosition);
-                telemetry.update();
+                x=leftPosition;
+                y=rightPosition;
                 MotorFrontLeft.setPower(0.8);
                 MotorFrontRight.setPower(-0.8);
-                sleep(3000);
+                leftPosition= MotorBackLeft.getCurrentPosition();
+                rightPosition=MotorBackRight.getCurrentPosition();
+                x=leftPosition;
+                y=rightPosition;
+                telemetry.addData("EncoderL Position", leftPosition);
+                telemetry.addData("EncoderR Position", rightPosition);
+                telemetry.update();
+                MotorBackLeft.setPower(0.8);
+                MotorBackRight.setPower(-0.8);
+                leftPosition= MotorBackLeft.getCurrentPosition();
+                rightPosition=MotorBackRight.getCurrentPosition();
+                x=leftPosition;
+                y=rightPosition;
+                MotorFrontLeft.setPower(-0.8);
+                MotorFrontRight.setPower(0.8);
+                leftPosition= MotorBackLeft.getCurrentPosition();
+                rightPosition=MotorBackRight.getCurrentPosition();
+                x=leftPosition;
+                y=rightPosition;
+                telemetry.addData("EncoderL Position", leftPosition);
+                telemetry.addData("EncoderR Position", rightPosition);
+                telemetry.update();
+                MotorBackLeft.setPower(-0.8);
+                MotorBackRight.setPower(0.8);
+                leftPosition= MotorBackLeft.getCurrentPosition();
+                rightPosition=MotorBackRight.getCurrentPosition();
+                x=leftPosition;
+                y=rightPosition;
+                MotorFrontRight.setPower(0.8);
+                MotorFrontLeft.setPower(-0.8);
+                leftPosition= MotorBackLeft.getCurrentPosition();
+                rightPosition=MotorBackRight.getCurrentPosition();
+                sleep(1000);
+                x=leftPosition;
+                y=rightPosition;
                 MotorFrontRight.setPower(-0.8);
                 MotorBackRight.setPower(-0.8);
-                sleep(1000);
+                leftPosition= MotorBackLeft.getCurrentPosition();
+                rightPosition=MotorBackRight.getCurrentPosition();
+                x=leftPosition;
+                y=rightPosition;
+                sleep(500);
+                MotorBackLeft.setPower(0);
+                MotorBackRight.setPower(0);
+                MotorFrontRight.setPower(0);
+                MotorFrontLeft.setPower(0);
 
                 // Show the position of the motor on telemetry
 
             }
-        }
 
-
+           */
+                 MotorBackLeft.setPower(-0.8);
+                 MotorBackRight.setPower(0.8);
+        }        MotorFrontRight.setPower(-0.8);
+                 MotorFrontLeft.setPower(0.8);
+                 sleep(1000);
     }
 }
