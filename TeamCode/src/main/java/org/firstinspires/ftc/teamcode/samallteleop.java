@@ -14,10 +14,13 @@ public class samallteleop extends LinearOpMode {
     private DcMotor MotorFrontRight;
     private DcMotor MotorBackLeft;
     private DcMotor MotorBackRight;
-    //private DcMotor Liftleft;
+   private DcMotor Liftleft;
     //arm
     private Servo armServo;
     private Servo rotateServo;
+    private Servo planeLaunch;
+
+    private static final double PLEN_LAUNCH = 1;
 private static final double CLAW_UP = -1;
 
     private static final double CLAW_DOWN = 1;
@@ -57,9 +60,10 @@ private static final double CLAW_UP = -1;
         MotorFrontRight = hardwareMap.dcMotor.get("MotorFrontRight");
         MotorBackLeft = hardwareMap.dcMotor.get("MotorBackLeft");
         MotorBackRight = hardwareMap.dcMotor.get("MotorBackRight");
-        //Liftleft = hardwareMap.dcMotor.get("Liftleft");
+       // Liftleft = hardwareMap.dcMotor.get("Liftleft");
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
+        planeLaunch=hardwareMap.servo.get("coolPlen");
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -71,8 +75,8 @@ private static final double CLAW_UP = -1;
         armServo.setPosition(ARM_RETRACTED_POSITION);
         //rotateServo.setPosition(CLAW_NEUTURAL);
 
-        waitForStart();
 
+        waitForStart();
 
         while (opModeIsActive()) {
             double turn = gamepad1.right_stick_x;
@@ -109,18 +113,29 @@ private static final double CLAW_UP = -1;
             if (gamepad2.x)
             {
                 armServo.setPosition(ARM_EXTENDED_POSITION);
+                planeLaunch.setPosition(0);
             }
             if (gamepad2.y)
             {
+
                 armServo.setPosition(ARM_RETRACTED_POSITION);
             }
+            //PLEN PLEN PLEN PLEN LAUNCH I LOVE PLANE -JAMES
+            if(gamepad2.left_bumper){
+                planeLaunch.setPosition(PLEN_LAUNCH);
+            }
 
+           // {
+
+           // }
             //stupid slide stuff
 
-            //if (gamepad2.left_stick_y > 0.1)
-            //{
-               // Liftleft.setPower(gamepad2.left_stick_y / 5);
+         //   if (gamepad2.left_stick_y > 0.1)
+          //  {
+            //   Liftleft.setPower(gamepad2.left_stick_y / 5);
             //}
+
+
         }
     }
 }
