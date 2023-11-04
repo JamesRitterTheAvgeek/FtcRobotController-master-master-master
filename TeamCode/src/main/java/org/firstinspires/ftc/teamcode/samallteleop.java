@@ -15,6 +15,7 @@ public class samallteleop extends LinearOpMode {
     private DcMotor MotorBackLeft;
     private DcMotor MotorBackRight;
     private DcMotor Liftleft;
+    private DcMotor Liftright;
     //arm
     private Servo armServo;
     private Servo rotateServo;
@@ -61,6 +62,7 @@ public class samallteleop extends LinearOpMode {
         MotorBackLeft = hardwareMap.dcMotor.get("MotorBackLeft");
         MotorBackRight = hardwareMap.dcMotor.get("MotorBackRight");
         Liftleft = hardwareMap.dcMotor.get("Liftleft");
+        Liftright = hardwareMap.dcMotor.get("Liftright");
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
@@ -137,6 +139,14 @@ public class samallteleop extends LinearOpMode {
             if (gamepad2.left_stick_y < 0.1)
             {
                 Liftleft.setPower(gamepad2.left_stick_y / 2);
+            }
+            if (gamepad2.left_stick_y > 0.1)
+            {
+                Liftright.setPower(gamepad2.left_stick_y / 2);
+            }
+            if (gamepad2.left_stick_y < -0.1)
+            {
+                Liftright.setPower(gamepad2.left_stick_y / 2);
             }
 
 
