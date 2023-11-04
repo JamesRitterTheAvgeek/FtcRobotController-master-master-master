@@ -44,7 +44,7 @@ public class accessibleauto extends LinearOpMode {
 
         while (opModeIsActive()) {
             // Get the current position of the motor
-          /*  while (true) {
+            while (true) {
                  leftPosition= MotorBackLeft.getCurrentPosition();
                  rightPosition=MotorBackRight.getCurrentPosition();
                 x=leftPosition;
@@ -90,15 +90,16 @@ public class accessibleauto extends LinearOpMode {
                 rightPosition=MotorBackRight.getCurrentPosition();
                 x=leftPosition;
                 y=rightPosition;
+                //move fowarard 1 tile
                 MotorFrontRight.setPower(0.8);
                 MotorFrontLeft.setPower(-0.8);
                 leftPosition= MotorBackLeft.getCurrentPosition();
                 rightPosition=MotorBackRight.getCurrentPosition();
-                sleep(1000);
+                sleep(250);
                 x=leftPosition;
                 y=rightPosition;
-                MotorFrontRight.setPower(-0.8);
-                MotorBackRight.setPower(-0.8);
+                MotorFrontRight.setPower(0.8);
+                MotorBackRight.setPower(0.8);
                 leftPosition= MotorBackLeft.getCurrentPosition();
                 rightPosition=MotorBackRight.getCurrentPosition();
                 x=leftPosition;
@@ -113,11 +114,8 @@ public class accessibleauto extends LinearOpMode {
 
             }
 
-           */
-                 MotorBackLeft.setPower(-0.8);
-                 MotorBackRight.setPower(0.8);
-        }        MotorFrontRight.setPower(-0.8);
-                 MotorFrontLeft.setPower(0.8);
-                 sleep(1000);
+
+
+        }
     }
 }
