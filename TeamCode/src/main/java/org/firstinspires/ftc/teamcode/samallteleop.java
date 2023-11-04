@@ -14,21 +14,21 @@ public class samallteleop extends LinearOpMode {
     private DcMotor MotorFrontRight;
     private DcMotor MotorBackLeft;
     private DcMotor MotorBackRight;
-   private DcMotor Liftleft;
+    private DcMotor Liftleft;
     //arm
     private Servo armServo;
     private Servo rotateServo;
     private Servo planeLaunch;
 
     private static final double PLEN_LAUNCH = 1;
-private static final double CLAW_UP = -1;
+    private static final double CLAW_UP = 0.8;
 
-    private static final double CLAW_DOWN = 1;
+    private static final double CLAW_DOWN = 0.2;
 
     private static final double CLAW_NEUTURAL = 0;
 
     private static final double ARM_RETRACTED_POSITION = 0.1;
-      private static final double ARM_EXTENDED_POSITION = 0.8;
+    private static final double ARM_EXTENDED_POSITION = 0.8;
 
 
     public void moveDriveTrain(){
@@ -60,7 +60,7 @@ private static final double CLAW_UP = -1;
         MotorFrontRight = hardwareMap.dcMotor.get("MotorFrontRight");
         MotorBackLeft = hardwareMap.dcMotor.get("MotorBackLeft");
         MotorBackRight = hardwareMap.dcMotor.get("MotorBackRight");
-       // Liftleft = hardwareMap.dcMotor.get("Liftleft");
+        Liftleft = hardwareMap.dcMotor.get("Liftleft");
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
@@ -125,15 +125,19 @@ private static final double CLAW_UP = -1;
                 planeLaunch.setPosition(PLEN_LAUNCH);
             }
 
-           // {
+            // {
 
-           // }
+            // }
             //stupid slide stuff
 
-         //   if (gamepad2.left_stick_y > 0.1)
-          //  {
-            //   Liftleft.setPower(gamepad2.left_stick_y / 5);
-            //}
+               if (gamepad2.left_stick_y > -0.1)
+              {
+               Liftleft.setPower(gamepad2.left_stick_y / 2);
+              }
+            if (gamepad2.left_stick_y < 0.1)
+            {
+                Liftleft.setPower(gamepad2.left_stick_y / 2);
+            }
 
 
         }
