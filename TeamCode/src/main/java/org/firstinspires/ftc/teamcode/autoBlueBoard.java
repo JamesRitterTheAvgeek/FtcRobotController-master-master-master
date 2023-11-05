@@ -45,6 +45,7 @@ public class autoBlueBoard extends LinearOpMode {
                     MotorBackRight.setPower(.5);
                 }
                 setDriveStop();
+
             }
         }
 

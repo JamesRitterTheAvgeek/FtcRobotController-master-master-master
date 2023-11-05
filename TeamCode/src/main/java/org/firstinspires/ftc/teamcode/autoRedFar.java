@@ -45,7 +45,24 @@ public class autoRedFar extends LinearOpMode {
                     MotorBackRight.setPower(.5);
                 }
                 setDriveStop();
+                ElapsedTime runtime3 = new ElapsedTime();
+                while(runtime3.seconds() < .5){
+                    MotorFrontLeft.setPower(.5);
+                    MotorFrontRight.setPower(-.5);
+                    MotorBackLeft.setPower(-.5);
+                    MotorBackRight.setPower(.5);
+                }
+                setDriveStop();
             }
+            if(returnvalue == 2){
+                ElapsedTime runtime4 = new ElapsedTime();
+                while(runtime4.seconds() < 1.5);
+                MotorFrontLeft.setPower(.5);
+                MotorFrontRight.setPower(.5);
+                MotorBackLeft.setPower(.5);
+                MotorBackRight.setPower(.5);
+            }
+            setDriveStop();
         }
 
 
