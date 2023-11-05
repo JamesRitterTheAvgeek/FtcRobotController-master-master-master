@@ -141,13 +141,13 @@ public class samallteleop extends LinearOpMode {
                 Liftleft.setPower(gamepad2.left_stick_y / 2);
             }
             // RIGHT SIDE MOTOR FOR LIFT
-            if (gamepad2.left_stick_y > 0.1)
+            if (gamepad2.left_stick_y > -0.1)
             {
-                Liftright.setPower(gamepad2.left_stick_y / 2);
+                Liftright.setPower(gamepad2.left_stick_y / -2);
             }
-            if (gamepad2.left_stick_y < -0.1)
+            if (gamepad2.left_stick_y < 0.1)
             {
-                Liftright.setPower(gamepad2.left_stick_y / 2);
+                Liftright.setPower(gamepad2.left_stick_y / -2);
             }
 
 
