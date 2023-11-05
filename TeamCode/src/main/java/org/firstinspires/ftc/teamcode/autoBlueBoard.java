@@ -2,30 +2,16 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous
-public class accessibleauto extends LinearOpMode {
+@Autonomous(name = "autoBlueBoard", group = "23274")
+public class autoBlueBoard extends LinearOpMode {
     private DcMotor MotorFrontLeft = null;
     private DcMotor MotorFrontRight = null;
     private DcMotor MotorBackLeft = null;
     private DcMotor MotorBackRight = null;
-    private DcMotor Liftleft = null;
-    //arm
-    private Servo armServo = null;
-    private Servo rotateServo = null;
-    private static final double CLAW_UP = -1;
-
-    private static final double CLAW_DOWN = 1;
-
-    private static final double CLAW_NEUTURAL = 0;
-
-    private static final double ARM_RETRACTED_POSITION = 0.1;
-    private static final double ARM_EXTENDED_POSITION = 0.8;
     double returnvalue = 0;
 
     @Override
