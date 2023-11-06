@@ -44,6 +44,7 @@ public class autoRedBoard extends LinearOpMode {
                     MotorBackLeft.setPower(.5);
                     MotorBackRight.setPower(.5);
                 }
+
                 setDriveStop();
             }
         }
