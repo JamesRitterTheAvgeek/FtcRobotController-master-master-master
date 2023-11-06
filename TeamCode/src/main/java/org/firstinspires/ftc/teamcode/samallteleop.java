@@ -100,10 +100,10 @@ public class samallteleop extends LinearOpMode {
             {
                 rotateServo.setPosition(CLAW_DOWN);
             }
-            if (gamepad2.right_bumper)
+            /*if (gamepad2.right_bumper)
             {
                 rotateServo.setPosition(CLAW_NEUTURAL);
-            }
+            }*/
 
 
             //claw open and close
@@ -112,16 +112,17 @@ public class samallteleop extends LinearOpMode {
             if (gamepad2.x)
             {
                 armServo.setPosition(ARM_EXTENDED_POSITION);
-                planeLaunch.setPosition(0);
             }
             if (gamepad2.y)
             {
-
                 armServo.setPosition(ARM_RETRACTED_POSITION);
             }
             //PLEN PLEN PLEN PLEN LAUNCH I LOVE PLANE -JAMES
             if(gamepad2.left_bumper){
                 planeLaunch.setPosition(PLEN_LAUNCH);
+            }
+            if(gamepad2.right_bumper){
+                planeLaunch.setPosition(0);
             }
 
             // {
