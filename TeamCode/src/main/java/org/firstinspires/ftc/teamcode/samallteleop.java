@@ -63,10 +63,12 @@ public class samallteleop extends LinearOpMode {
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
+        rotateServo = hardwareMap.servo.get("rotateServo");
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+
 
         double speed = 0.6 * (gamepad1.left_trigger + 1) * (1 - gamepad1.right_trigger / 1.2);
 
