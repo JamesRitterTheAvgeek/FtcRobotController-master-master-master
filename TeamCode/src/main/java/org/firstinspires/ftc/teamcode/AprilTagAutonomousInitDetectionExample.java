@@ -19,13 +19,10 @@
  * SOFTWARE.
  */
 
-
 package org.firstinspires.ftc.teamcode;
-
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -38,9 +35,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-
 import java.util.ArrayList;
-
 
 @TeleOp
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
@@ -48,9 +43,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
-
     static final double FEET_PER_METER = 3.28084;
-
 
     // Lens intrinsics
     // UNITS ARE PIXELS
@@ -61,16 +54,14 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     double cx = 402.145;
     double cy = 221.506;
 
-
     // UNITS ARE METERS
+    public double x=0;
+    public double y=0;
     double tagsize = 0.166;
-
 
     int ID_TAG_OF_INTEREST = 17; // Tag ID 18 from the 36h11 family
 
-
     AprilTagDetection tagOfInterest = null;
-
 
     @Override
     public void runOpMode()
@@ -78,7 +69,6 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Camera"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
-
 
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
@@ -89,18 +79,14 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                 camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
             }
 
-
             @Override
             public void onError(int errorCode)
             {
 
-
             }
         });
 
-
         telemetry.setMsTransmissionInterval(50);
-
 
         /*
          * The INIT-loop:
@@ -110,11 +96,9 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         {
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
-
             if(currentDetections.size() != 0)
             {
                 boolean tagFound = false;
-
 
                 for(AprilTagDetection tag : currentDetections)
                 {
@@ -126,7 +110,6 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                     }
                 }
 
-
                 if(tagFound)
                 {
                     telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
@@ -135,7 +118,6 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                 else
                 {
                     telemetry.addLine("Don't see tag of interest :(");
-
 
                     if(tagOfInterest == null)
                     {
@@ -148,12 +130,10 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                     }
                 }
 
-
             }
             else
             {
                 telemetry.addLine("Don't see tag of interest :(");
-
 
                 if(tagOfInterest == null)
                 {
@@ -165,20 +145,16 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                     tagToTelemetry(tagOfInterest);
                 }
 
-
             }
-
 
             telemetry.update();
             sleep(20);
         }
 
-
         /*
          * The START command just came in: now work off the latest snapshot acquired
          * during the init loop.
          */
-
 
         /* Update the telemetry */
         if(tagOfInterest != null)
@@ -192,18 +168,21 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
             telemetry.update();
         }
-        //here is your sets
+        //here are  your sets
+        if(x>0.4){
 
+        } else if (x<0) {
 
+        }else{
+
+        }
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         while (opModeIsActive()) {sleep(20);}
     }
 
-
     void tagToTelemetry(AprilTagDetection detection)
     {
         Orientation rot = Orientation.getOrientation(detection.pose.R, AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES);
-
 
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
         telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
@@ -212,5 +191,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", rot.firstAngle));
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", rot.secondAngle));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", rot.thirdAngle));
+        x=detection.pose.x*FEET_PER_METER;
+        y=detection.pose.y*FEET_PER_METER;
     }
 }
