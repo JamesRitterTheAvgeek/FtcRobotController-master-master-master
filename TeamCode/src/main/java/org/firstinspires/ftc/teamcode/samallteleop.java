@@ -15,6 +15,7 @@ public class samallteleop extends LinearOpMode {
     private DcMotor liftLeft;
     private DcMotor liftRight;
     //claw
+    private Servo pushBot;
     private Servo armServo;
     private Servo rotateServo;
     //plen
@@ -136,21 +137,21 @@ public class samallteleop extends LinearOpMode {
             // Left side motor for lift
                if (gamepad2.left_stick_y > -0.1)
               {
-               liftLeft .setPower(gamepad2.left_stick_y / 1.25);
+               liftLeft .setPower(gamepad2.left_stick_y / 4);
               }
             if (gamepad2.left_stick_y < 0.1)
             {
-                liftLeft.setPower(gamepad2.left_stick_y / 1.25);
+                liftLeft.setPower(gamepad2.left_stick_y / 4);
             }
             // RIGHT SIDE MOTOR FOR LIFT
             if (gamepad2.left_stick_y > -0.1)
             {
-                liftRight.setPower(gamepad2.left_stick_y / -1.25);
+                liftRight.setPower(gamepad2.left_stick_y / -4);
             }
             if (gamepad2.left_stick_y < 0.1)
             {
                 liftRight
-                        .setPower(gamepad2.left_stick_y / -1.25);
+                        .setPower(gamepad2.left_stick_y / -4);
             }
 
 
