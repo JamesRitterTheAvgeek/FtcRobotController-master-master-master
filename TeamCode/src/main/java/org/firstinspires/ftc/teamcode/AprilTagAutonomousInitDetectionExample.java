@@ -23,6 +23,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -62,10 +65,28 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     int ID_TAG_OF_INTEREST = 17; // Tag ID 18 from the 36h11 family
 
     AprilTagDetection tagOfInterest = null;
+    private DcMotor MotorBackRight;
+    private DcMotor MotorBackLeft;
+    private DcMotor MotorFrontRight;
+    private DcMotor MotorFrontLeft;
 
     @Override
     public void runOpMode()
     {
+        MotorFrontLeft = hardwareMap.get(DcMotor.class, "fldrive");
+        MotorFrontRight = hardwareMap.get(DcMotor.class, "frdrive");
+        MotorBackLeft = hardwareMap.get(DcMotor.class, "bldrive");
+        MotorBackRight = hardwareMap.get(DcMotor.class, "brdrive");
+
+        MotorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        MotorFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        MotorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        MotorBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Camera"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -169,12 +190,29 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             telemetry.update();
         }
         //here are  your sets
+        ElapsedTime runtime2 = new ElapsedTime();
         if(x>0.4){
-
+            while(runtime2.seconds()<0.75) {
+                MotorFrontLeft.setPower(.5);
+                MotorFrontRight.setPower(-.5);
+                MotorBackLeft.setPower(.5);
+                MotorBackRight.setPower(-.5);
+            }
         } else if (x<0) {
 
+            while(runtime2.seconds()<0.75){
+                MotorFrontLeft.setPower(.5);
+                MotorFrontRight.setPower(.5);
+                MotorBackLeft.setPower(.5);
+                MotorBackRight.setPower(.5);
+            }
         }else{
-
+            while(runtime2.seconds()<0.75){
+                MotorFrontLeft.setPower(-.5);
+                MotorFrontRight.setPower(.5);
+                MotorBackLeft.setPower(.5);
+                MotorBackRight.setPower(-.5);
+            }
         }
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         while (opModeIsActive()) {sleep(20);}
