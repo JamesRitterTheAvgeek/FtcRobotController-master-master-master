@@ -11,17 +11,19 @@ public class samallteleop extends LinearOpMode {
     private DcMotor MotorFrontRight;
     private DcMotor MotorBackLeft;
     private DcMotor MotorBackRight;
-    private DcMotor Liftleft;
-    private DcMotor Liftright;
-    //arm
+    //slides
+    private DcMotor liftLeft;
+    private DcMotor liftRight;
+    //claw
     private Servo armServo;
     private Servo rotateServo;
+    //plen
     private Servo planeLaunch;
 
     private static final double PLEN_LAUNCH = 1;
-    private static final double CLAW_UP = 0.8;
+    private static final double CLAW_UP = 0.6;
 
-    private static final double CLAW_DOWN = 0.2;
+    private static final double CLAW_DOWN = 0.0;
 
     private static final double CLAW_NEUTURAL = 0;
 
@@ -58,8 +60,8 @@ public class samallteleop extends LinearOpMode {
         MotorFrontRight = hardwareMap.dcMotor.get("MotorFrontRight");
         MotorBackLeft = hardwareMap.dcMotor.get("MotorBackLeft");
         MotorBackRight = hardwareMap.dcMotor.get("MotorBackRight");
-        Liftleft = hardwareMap.dcMotor.get("Liftleft");
-        Liftright = hardwareMap.dcMotor.get("Liftright");
+        liftLeft = hardwareMap.dcMotor.get("liftLeft");
+        liftRight = hardwareMap.dcMotor.get("liftRight");
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
@@ -134,20 +136,21 @@ public class samallteleop extends LinearOpMode {
             // Left side motor for lift
                if (gamepad2.left_stick_y > -0.1)
               {
-               Liftleft.setPower(gamepad2.left_stick_y / 1.25);
+               liftLeft .setPower(gamepad2.left_stick_y / 1.25);
               }
             if (gamepad2.left_stick_y < 0.1)
             {
-                Liftleft.setPower(gamepad2.left_stick_y / 1.25);
+                liftLeft.setPower(gamepad2.left_stick_y / 1.25);
             }
             // RIGHT SIDE MOTOR FOR LIFT
             if (gamepad2.left_stick_y > -0.1)
             {
-                Liftright.setPower(gamepad2.left_stick_y / -1.25);
+                liftRight.setPower(gamepad2.left_stick_y / -1.25);
             }
             if (gamepad2.left_stick_y < 0.1)
             {
-                Liftright.setPower(gamepad2.left_stick_y / -1.25);
+                liftRight
+                        .setPower(gamepad2.left_stick_y / -1.25);
             }
 
 
