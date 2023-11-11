@@ -86,7 +86,7 @@ public class samallteleop extends LinearOpMode {
             double turn = gamepad1.right_stick_x;
             double strafe = gamepad1.left_stick_x;
             double drive = gamepad1.left_stick_y;
-
+            double lift = gamepad2.left_stick_y *.75;
             double speedMultiplier = .4 *((1-gamepad1.left_trigger*.8)+(1+gamepad1.right_trigger*.6));
 
             //forward and backward
@@ -146,12 +146,12 @@ public class samallteleop extends LinearOpMode {
             // RIGHT SIDE MOTOR FOR LIFT
             if (gamepad2.left_stick_y > -0.1)
             {
-                liftRight.setPower(gamepad2.left_stick_y / -4);
+                liftRight.setPower(lift);
             }
             if (gamepad2.left_stick_y < 0.1)
             {
                 liftRight
-                        .setPower(gamepad2.left_stick_y / -4);
+                        .setPower(lift);
             }
 
 
