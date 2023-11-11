@@ -169,9 +169,9 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             telemetry.update();
         }
         //here are  your sets
-        if(x>0.4){
+        if(x>-0.5){
 
-        } else if (x<0) {
+        } else if (x<-0.5) {
 
         }else{
 
