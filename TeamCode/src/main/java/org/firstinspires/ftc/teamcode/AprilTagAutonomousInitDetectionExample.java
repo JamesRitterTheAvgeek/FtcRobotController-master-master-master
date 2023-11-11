@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -40,7 +41,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
-@TeleOp
+@Autonomous
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -191,12 +192,18 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         }
         //here are  your sets
         ElapsedTime runtime2 = new ElapsedTime();
-        if(x>0.4){
-            while(runtime2.seconds()<0.75) {
+        if(x<-0.6){
+            while(runtime2.seconds()<0.25) {
                 MotorFrontLeft.setPower(.5);
-                MotorFrontRight.setPower(-.5);
+                MotorFrontRight.setPower(.5);
                 MotorBackLeft.setPower(.5);
-                MotorBackRight.setPower(-.5);
+                MotorBackRight.setPower(.5);
+            }
+            while(runtime2.seconds()<0.75) {
+                MotorFrontLeft.setPower(-.5);
+                MotorFrontRight.setPower(.5);
+                MotorBackLeft.setPower(-.5);
+                MotorBackRight.setPower(.5);
             }
         } else if (x<0) {
 
