@@ -199,26 +199,26 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                 MotorBackLeft.setPower(.5);
                 MotorBackRight.setPower(.5);
             }
-            while(runtime2.seconds()<0.75) {
+            while(runtime2.seconds()<0.25) {
                 MotorFrontLeft.setPower(-.5);
                 MotorFrontRight.setPower(.5);
                 MotorBackLeft.setPower(-.5);
                 MotorBackRight.setPower(.5);
             }
-        } else if (x<0) {
+        } else if (x>-0.6) {
 
-            while(runtime2.seconds()<0.75){
+            while(runtime2.seconds()<0.25){
                 MotorFrontLeft.setPower(.5);
                 MotorFrontRight.setPower(.5);
                 MotorBackLeft.setPower(.5);
                 MotorBackRight.setPower(.5);
             }
-        }else{
-            while(runtime2.seconds()<0.75){
-                MotorFrontLeft.setPower(-.5);
-                MotorFrontRight.setPower(.5);
-                MotorBackLeft.setPower(.5);
-                MotorBackRight.setPower(-.5);
+        } else{
+            while(runtime2.seconds()<0.25){
+                MotorFrontLeft.setPower(.5);
+                MotorFrontRight.setPower(-.5);
+                MotorBackLeft.setPower(-.5);
+                MotorBackRight.setPower(.5);
             }
         }
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
