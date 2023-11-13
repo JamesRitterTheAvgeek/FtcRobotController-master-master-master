@@ -92,7 +92,7 @@ public class opencv extends LinearOpMode {
 
 
             } else if (cX>240 && cY<350) {
-                telemetry.addData("Location","Right");
+                telemetry.addData("Location","Righ");
 
 
 
