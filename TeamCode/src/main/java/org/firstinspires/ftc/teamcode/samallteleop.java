@@ -150,8 +150,7 @@ public class samallteleop extends LinearOpMode {
             }
             if (gamepad2.left_stick_y < 0.1)
             {
-                liftRight
-                        .setPower(lift);
+                liftRight.setPower(lift);
             }
 
 
