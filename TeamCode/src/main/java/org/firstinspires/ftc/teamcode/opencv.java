@@ -28,7 +28,9 @@ import java.util.List;
 @Autonomous(name = "OpenCV Testing")
 
 public class opencv extends LinearOpMode {
-
+    public boolean right=false;
+    public boolean middle=false;
+    public boolean left=false;
     double cX = 0;
     double cY = 0;
     double width = 0;
@@ -88,17 +90,23 @@ public class opencv extends LinearOpMode {
             telemetry.update();
             if (cX>150 && cX<240){
                 telemetry.addData("Location","Middle");
-
+                right=false;
+                middle=true;
+                left=false;
 
 
             } else if (cX>240 && cY<350) {
-                telemetry.addData("Location","Righ");
-
+                telemetry.addData("Location","Right");
+                right=true;
+                middle=false;
+                left=false;
 
 
             }else{
                 telemetry.addData("Location","Left");
-
+                right=false;
+                middle=false;
+                left=true;
             }
             // The OpenCV pipeline automatically processes frames and handles detection
         }
@@ -122,6 +130,7 @@ public class opencv extends LinearOpMode {
         controlHubCam.openCameraDevice();
         controlHubCam.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, OpenCvCameraRotation.UPRIGHT);
     }
+
     class YellowBlobDetectionPipeline extends OpenCvPipeline {
         @Override
         public Mat processFrame(Mat input) {
@@ -194,6 +203,16 @@ public class opencv extends LinearOpMode {
             }
 
             return largestContour;
+        }
+        public String place(){
+            if (left=true){
+                return "left";
+            }else if (right=true){
+                return "right";
+
+            }else{
+                return "middle";
+            }
         }
         private double calculateWidth(MatOfPoint contour) {
             Rect boundingRect = Imgproc.boundingRect(contour);
