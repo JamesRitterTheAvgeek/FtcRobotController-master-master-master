@@ -57,10 +57,10 @@ public class samallteleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 //Initialize Drive Motors
-        leftFront = hardwareMap.dcMotor.get("MotorFrontLeft");
-        rightFront = hardwareMap.dcMotor.get("MotorFrontRight");
-        leftRear = hardwareMap.dcMotor.get("MotorBackLeft");
-        rightRear = hardwareMap.dcMotor.get("MotorBackRight");
+        leftFront = hardwareMap.dcMotor.get("leftFront");
+        rightFront = hardwareMap.dcMotor.get("rightFront");
+        leftRear = hardwareMap.dcMotor.get("leftRear");
+        rightRear = hardwareMap.dcMotor.get("rightRear");
         liftLeft = hardwareMap.dcMotor.get("liftLeft");
         liftRight = hardwareMap.dcMotor.get("liftRight");
 //declare arm servo
