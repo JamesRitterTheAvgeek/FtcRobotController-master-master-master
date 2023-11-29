@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "autoRedBoard", group = "23274")
+@Autonomous(name = "autoBlueBoard", group = "23274")
 public class autoBlueBoard extends LinearOpMode {
 
     @Override

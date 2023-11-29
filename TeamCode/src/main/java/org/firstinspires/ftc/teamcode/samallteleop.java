@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name = "smallteleop", group = "teleop")
 public class samallteleop extends LinearOpMode {
     //motors
-    private DcMotor MotorFrontLeft;
-    private DcMotor MotorFrontRight;
-    private DcMotor MotorBackLeft;
-    private DcMotor MotorBackRight;
+    private DcMotor leftFront;
+    private DcMotor rightFront;
+    private DcMotor leftRear;
+    private DcMotor rightRear;
     //slides
     private DcMotor liftLeft;
     private DcMotor liftRight;
@@ -39,17 +39,17 @@ public class samallteleop extends LinearOpMode {
         vertical = gamepad1.left_stick_y;
         horizontal = gamepad1.left_stick_x;
         pivot = gamepad1.right_stick_x;
-        MotorFrontRight.setPower(pivot -vertical + horizontal);
-        MotorFrontLeft.setPower(pivot + (-vertical - horizontal));
-        MotorBackRight.setPower(-pivot + (-vertical - horizontal));
-        MotorBackLeft.setPower(-pivot + (-vertical + horizontal));
+        rightFront.setPower(pivot -vertical + horizontal);
+        leftFront.setPower(pivot + (-vertical - horizontal));
+        rightRear.setPower(-pivot + (-vertical - horizontal));
+        leftRear.setPower(-pivot + (-vertical + horizontal));
 
 
         //default speed
-        MotorFrontLeft.setPower(.5);
-        MotorFrontRight.setPower(.5);
-        MotorBackLeft.setPower(.5);
-        MotorBackRight.setPower(.5);
+        leftFront.setPower(.5);
+        rightFront.setPower(.5);
+        leftRear.setPower(.5);
+        rightRear.setPower(.5);
 
 
     }
@@ -57,20 +57,20 @@ public class samallteleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 //Initialize Drive Motors
-        MotorFrontLeft = hardwareMap.dcMotor.get("MotorFrontLeft");
-        MotorFrontRight = hardwareMap.dcMotor.get("MotorFrontRight");
-        MotorBackLeft = hardwareMap.dcMotor.get("MotorBackLeft");
-        MotorBackRight = hardwareMap.dcMotor.get("MotorBackRight");
+        leftFront = hardwareMap.dcMotor.get("MotorFrontLeft");
+        rightFront = hardwareMap.dcMotor.get("MotorFrontRight");
+        leftRear = hardwareMap.dcMotor.get("MotorBackLeft");
+        rightRear = hardwareMap.dcMotor.get("MotorBackRight");
         liftLeft = hardwareMap.dcMotor.get("liftLeft");
         liftRight = hardwareMap.dcMotor.get("liftRight");
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
         rotateServo = hardwareMap.servo.get("rotateServo");
-        MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        MotorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
         double speed = 0.6 * (gamepad1.left_trigger + 1) * (1 - gamepad1.right_trigger / 1.2);
@@ -90,10 +90,10 @@ public class samallteleop extends LinearOpMode {
             double speedMultiplier = .4 *((1-gamepad1.left_trigger*.8)+(1+gamepad1.right_trigger*.6));
 
             //forward and backward
-            MotorFrontLeft.setPower(speedMultiplier * (drive - turn - strafe));
-            MotorFrontRight.setPower(speedMultiplier * (drive + turn + strafe));
-            MotorBackLeft.setPower(speedMultiplier * (drive - turn + strafe));
-            MotorBackRight.setPower(speedMultiplier * (drive + turn - strafe));
+            leftFront.setPower(speedMultiplier * (drive - turn - strafe));
+            rightFront.setPower(speedMultiplier * (drive + turn + strafe));
+            leftRear.setPower(speedMultiplier * (drive - turn + strafe));
+            rightRear.setPower(speedMultiplier * (drive + turn - strafe));
 
 //claw rotation
             if (gamepad2.a)
