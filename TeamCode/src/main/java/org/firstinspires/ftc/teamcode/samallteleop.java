@@ -112,7 +112,7 @@ public class samallteleop extends LinearOpMode {
 
 
             //claw open and close
-
+//comment
 
             if (gamepad2.x)
             {
