@@ -18,7 +18,7 @@ public class samallteleop extends LinearOpMode {
     private Servo pushBot;
     private Servo armMovementServo;
     private Servo armServo;
-    private Servo rotateServo;
+    //private Servo rotateServo;
     //plen
     private Servo planeLaunch;
 
@@ -69,7 +69,7 @@ public class samallteleop extends LinearOpMode {
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
-        rotateServo = hardwareMap.servo.get("rotateServo");
+        //rotateServo = hardwareMap.servo.get("rotateServo");
         leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -158,11 +158,11 @@ public class samallteleop extends LinearOpMode {
             }
 //arm movement
 
-            if (gamepad2.a)
+            if (gamepad1.a)
             {
                 armMovementServo.setPosition(ARM_UP);
             }
-            if (gamepad2.b)
+            if (gamepad1.b)
             {
                 armMovementServo.setPosition(ARM_DOWN);
             }
