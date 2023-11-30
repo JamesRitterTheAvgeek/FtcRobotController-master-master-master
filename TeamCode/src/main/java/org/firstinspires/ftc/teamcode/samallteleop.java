@@ -16,6 +16,7 @@ public class samallteleop extends LinearOpMode {
     private DcMotor liftRight;
     //claw
     private Servo pushBot;
+    private Servo armMovementServo;
     private Servo armServo;
     private Servo rotateServo;
     //plen
@@ -31,6 +32,8 @@ public class samallteleop extends LinearOpMode {
     private static final double ARM_RETRACTED_POSITION = 0.1;
     private static final double ARM_EXTENDED_POSITION = 0.8;
 
+    private static final double ARM_UP = 0.7;
+    private static final double ARM_DOWN = 0.1;
 
     public void moveDriveTrain(){
         double vertical;
@@ -71,6 +74,7 @@ public class samallteleop extends LinearOpMode {
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
+        armMovementServo =  hardwareMap.servo.get("armMovementServo");
 
 
         double speed = 0.6 * (gamepad1.left_trigger + 1) * (1 - gamepad1.right_trigger / 1.2);
@@ -96,7 +100,7 @@ public class samallteleop extends LinearOpMode {
             rightRear.setPower(speedMultiplier * (drive + turn - strafe));
 
 //claw rotation
-            if (gamepad2.a)
+           /* if (gamepad2.a)
             {
                 rotateServo.setPosition(CLAW_UP);
             }
@@ -152,7 +156,16 @@ public class samallteleop extends LinearOpMode {
             {
                 liftRight.setPower(lift);
             }
+//arm movement
 
+            if (gamepad2.a)
+            {
+                armMovementServo.setPosition(ARM_UP);
+            }
+            if (gamepad2.b)
+            {
+                armMovementServo.setPosition(ARM_DOWN);
+            }
 
         }
     }
