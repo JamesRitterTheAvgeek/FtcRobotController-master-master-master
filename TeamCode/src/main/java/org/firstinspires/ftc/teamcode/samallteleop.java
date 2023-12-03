@@ -85,7 +85,7 @@ public class samallteleop extends LinearOpMode {
 
         armServo.setPosition(ARM_RETRACTED_POSITION);
         //rotateServo.setPosition(CLAW_NEUTURAL);
-       double targetPosition = 0.8;
+        double targetPosition = 0.8;
 
 //2
         waitForStart();
