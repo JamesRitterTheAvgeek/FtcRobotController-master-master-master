@@ -14,9 +14,11 @@ public class samallteleop extends LinearOpMode {
     //slides
     private DcMotor liftLeft;
     private DcMotor liftRight;
+    private DcMotor ArmMotor;
     //claw
     private Servo pushBot;
     private Servo armMovementServo;
+
     private Servo armServo;
     //private Servo rotateServo;
     //plen
@@ -34,6 +36,7 @@ public class samallteleop extends LinearOpMode {
 
     private static final double ARM_UP = 0.7;
     private static final double ARM_DOWN = 0.1;
+
 
     public void moveDriveTrain(){
         double vertical;
@@ -75,7 +78,9 @@ public class samallteleop extends LinearOpMode {
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
         armMovementServo =  hardwareMap.servo.get("armMovementServo");
-
+        ArmMotor = hardwareMap.dcMotor.get("ArmMotor");
+        ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         double speed = 0.6 * (gamepad1.left_trigger + 1) * (1 - gamepad1.right_trigger / 1.2);
 
@@ -139,7 +144,7 @@ public class samallteleop extends LinearOpMode {
             // }
             //stupid slide stuff
             // Left side motor for lift
-               if (gamepad2.left_stick_y > -0.1)
+          /*     if (gamepad2.left_stick_y > -0.1)
               {
                liftLeft .setPower(gamepad2.left_stick_y / 4);
               }
@@ -155,16 +160,18 @@ public class samallteleop extends LinearOpMode {
             if (gamepad2.left_stick_y < 0.1)
             {
                 liftRight.setPower(lift);
-            }
+            } */
 //arm movement
 
-            if (gamepad1.a)
+
+
+            if (gamepad2.a)
             {
-                armMovementServo.setPosition(ARM_UP);
+                ArmMotor.setTargetPosition((int) 0.8);
             }
-            if (gamepad1.b)
+            if (gamepad2.b)
             {
-                armMovementServo.setPosition(ARM_DOWN);
+                ArmMotor.setTargetPosition((int) 0.1);
             }
 
         }
