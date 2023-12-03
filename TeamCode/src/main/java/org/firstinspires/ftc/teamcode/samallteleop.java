@@ -67,8 +67,7 @@ public class samallteleop extends LinearOpMode {
         rightFront = hardwareMap.dcMotor.get("rightFront");
         leftRear = hardwareMap.dcMotor.get("leftRear");
         rightRear = hardwareMap.dcMotor.get("rightRear");
-        liftLeft = hardwareMap.dcMotor.get("liftLeft");
-        liftRight = hardwareMap.dcMotor.get("liftRight");
+
 //declare arm servo
         armServo = hardwareMap.servo.get("armServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
@@ -79,14 +78,14 @@ public class samallteleop extends LinearOpMode {
         leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
         armMovementServo =  hardwareMap.servo.get("armMovementServo");
         ArmMotor = hardwareMap.dcMotor.get("ArmMotor");
-        ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        ArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
         double speed = 0.6 * (gamepad1.left_trigger + 1) * (1 - gamepad1.right_trigger / 1.2);
 
+        // Set the motor's run mode to RUN_TO_POSITION
+        ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         armServo.setPosition(ARM_RETRACTED_POSITION);
         //rotateServo.setPosition(CLAW_NEUTURAL);
+       double targetPosition = 0.8;
 
 //2
         waitForStart();
@@ -139,28 +138,8 @@ public class samallteleop extends LinearOpMode {
                 planeLaunch.setPosition(0);
             }
 
-            // {
 
-            // }
-            //stupid slide stuff
-            // Left side motor for lift
-          /*     if (gamepad2.left_stick_y > -0.1)
-              {
-               liftLeft .setPower(gamepad2.left_stick_y / 4);
-              }
-            if (gamepad2.left_stick_y < 0.1)
-            {
-                liftLeft.setPower(gamepad2.left_stick_y / 4);
-            }
-            // RIGHT SIDE MOTOR FOR LIFT
-            if (gamepad2.left_stick_y > -0.1)
-            {
-                liftRight.setPower(lift);
-            }
-            if (gamepad2.left_stick_y < 0.1)
-            {
-                liftRight.setPower(lift);
-            } */
+
 //arm movement
 
 
