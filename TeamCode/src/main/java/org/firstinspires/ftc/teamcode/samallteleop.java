@@ -7,20 +7,20 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name = "smallteleop", group = "teleop")
 public class samallteleop extends LinearOpMode {
     //motors
-    private DcMotor leftFront;
-    private DcMotor rightFront;
-    private DcMotor leftRear;
-    private DcMotor rightRear;
+    private DcMotor MotorFrontLeft;
+    private DcMotor MotorFrontRight;
+    private DcMotor MotorBackLeft;
+    private DcMotor MotorBackRight;
+
+    private DcMotor liftArm;
     //slides
     private DcMotor liftLeft;
     private DcMotor liftRight;
-    private DcMotor ArmMotor;
+    //private DcMotor spoolLift;
     //claw
     private Servo pushBot;
-    private Servo armMovementServo;
-
     private Servo armServo;
-    //private Servo rotateServo;
+    private Servo rotateServo;
     //plen
     private Servo planeLaunch;
 
@@ -34,9 +34,6 @@ public class samallteleop extends LinearOpMode {
     private static final double ARM_RETRACTED_POSITION = 0.1;
     private static final double ARM_EXTENDED_POSITION = 0.8;
 
-    private static final double ARM_UP = 0.7;
-    private static final double ARM_DOWN = 0.1;
-
 
     public void moveDriveTrain(){
         double vertical;
@@ -45,17 +42,17 @@ public class samallteleop extends LinearOpMode {
         vertical = gamepad1.left_stick_y;
         horizontal = gamepad1.left_stick_x;
         pivot = gamepad1.right_stick_x;
-        rightFront.setPower(pivot -vertical + horizontal);
-        leftFront.setPower(pivot + (-vertical - horizontal));
-        rightRear.setPower(-pivot + (-vertical - horizontal));
-        leftRear.setPower(-pivot + (-vertical + horizontal));
+        MotorFrontRight.setPower(pivot -vertical + horizontal);
+        MotorFrontLeft.setPower(pivot + (-vertical - horizontal));
+        MotorBackRight.setPower(-pivot + (-vertical - horizontal));
+        MotorBackLeft.setPower(-pivot + (-vertical + horizontal));
 
 
         //default speed
-        leftFront.setPower(.5);
-        rightFront.setPower(.5);
-        leftRear.setPower(.5);
-        rightRear.setPower(.5);
+        MotorFrontLeft.setPower(.5);
+        MotorFrontRight.setPower(.5);
+        MotorBackLeft.setPower(.5);
+        MotorBackRight.setPower(.5);
 
 
     }
@@ -63,29 +60,32 @@ public class samallteleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 //Initialize Drive Motors
-        leftFront = hardwareMap.dcMotor.get("leftFront");
-        rightFront = hardwareMap.dcMotor.get("rightFront");
-        leftRear = hardwareMap.dcMotor.get("leftRear");
-        rightRear = hardwareMap.dcMotor.get("rightRear");
-
+        MotorFrontLeft = hardwareMap.dcMotor.get("leftFront");
+        MotorFrontRight = hardwareMap.dcMotor.get("rightFront");
+        MotorBackLeft = hardwareMap.dcMotor.get("leftRear");
+        MotorBackRight = hardwareMap.dcMotor.get("rightRear");
+        //liftLeft = hardwareMap.dcMotor.get("liftLeft");
+        //liftRight = hardwareMap.dcMotor.get("liftRight");
+        //spoolLift=hardwareMap.dcMotor.get("spoolLift");
+        liftArm= hardwareMap.dcMotor.get("liftArm");
+        //liftLeft = hardwareMap.dcMotor.get("liftLeft");
+        //  liftRight = hardwareMap.dcMotor.get("liftRight");""
 //declare arm servo
-        armServo = hardwareMap.servo.get("armServo");
+        armServo = hardwareMap.servo.get("clawServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
         //rotateServo = hardwareMap.servo.get("rotateServo");
-        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        armMovementServo =  hardwareMap.servo.get("armMovementServo");
-        ArmMotor = hardwareMap.dcMotor.get("ArmMotor");
+
+        MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        MotorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
         double speed = 0.6 * (gamepad1.left_trigger + 1) * (1 - gamepad1.right_trigger / 1.2);
 
-        // Set the motor's run mode to RUN_TO_POSITION
-        ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         armServo.setPosition(ARM_RETRACTED_POSITION);
         //rotateServo.setPosition(CLAW_NEUTURAL);
-        double targetPosition = 0.8;
 
 //2
         waitForStart();
@@ -94,17 +94,20 @@ public class samallteleop extends LinearOpMode {
             double turn = gamepad1.right_stick_x;
             double strafe = gamepad1.left_stick_x;
             double drive = gamepad1.left_stick_y;
-            double lift = gamepad2.left_stick_y *.75;
             double speedMultiplier = .4 *((1-gamepad1.left_trigger*.8)+(1+gamepad1.right_trigger*.6));
-
+            double servoPower=0;
+            double lift=gamepad2.right_stick_y;
             //forward and backward
-            leftFront.setPower(speedMultiplier * (drive - turn - strafe));
-            rightFront.setPower(speedMultiplier * (drive + turn + strafe));
-            leftRear.setPower(speedMultiplier * (drive - turn + strafe));
-            rightRear.setPower(speedMultiplier * (drive + turn - strafe));
+            MotorFrontLeft.setPower(speedMultiplier * (drive - turn - strafe));
+            MotorFrontRight.setPower(speedMultiplier * (drive + turn + strafe));
+            MotorBackLeft.setPower(speedMultiplier * (drive - turn + strafe));
+            MotorBackRight.setPower(speedMultiplier * (drive + turn - strafe));
+           //iftLeft.setPower(hang);
+           //iftRight.setPower(-hang);
+            liftArm.setPower(lift/1.5);
 
 //claw rotation
-           /* if (gamepad2.a)
+            if (gamepad2.a)
             {
                 rotateServo.setPosition(CLAW_UP);
             }
@@ -120,15 +123,26 @@ public class samallteleop extends LinearOpMode {
 
 
             //claw open and close
-//comment
+            /*if (gamepad2.dpad_up){
+                spoolLift.setPower(1);
+            }else if (gamepad2.dpad_down){
+                spoolLift.setPower(-1);
+            }else {
+                spoolLift.setPower(0);
+            }*/
 
             if (gamepad2.x)
             {
-                armServo.setPosition(ARM_EXTENDED_POSITION);
+                servoPower+=0.1;
+                armServo.setPosition(1);
             }
             if (gamepad2.y)
             {
-                armServo.setPosition(ARM_RETRACTED_POSITION);
+                servoPower-=.1;
+                armServo.setPosition(0.1);
+            }
+            if (gamepad2.dpad_up){
+                armServo.setPosition(CLAW_NEUTURAL);
             }
             //PLEN PLEN PLEN PLEN LAUNCH I LOVE PLANE -JAMES
             if(gamepad2.left_bumper){
@@ -138,20 +152,14 @@ public class samallteleop extends LinearOpMode {
                 planeLaunch.setPosition(0);
             }
 
-//comment
+            // {
 
-//arm movement
+            // }
+            //stupid slide stuff
+            // Left side motor for lift
 
+            // RIGHT SIDE MOTOR FOR LIFT
 
-
-            if (gamepad2.a)
-            {
-                ArmMotor.setTargetPosition((int) 0.8);
-            }
-            if (gamepad2.b)
-            {
-                ArmMotor.setTargetPosition((int) 0.1);
-            }
 
         }
     }
