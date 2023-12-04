@@ -25,9 +25,9 @@ public class samallteleop extends LinearOpMode {
     private Servo planeLaunch;
 
     private static final double PLEN_LAUNCH = 1;
-    private static final double CLAW_UP = 0.6;
+    private static final double CLAW_UP = 0;
 
-    private static final double CLAW_DOWN = 0.0;
+    private static final double CLAW_DOWN = 1;
 
     private static final double CLAW_NEUTURAL = 0;
 
@@ -64,16 +64,10 @@ public class samallteleop extends LinearOpMode {
         MotorFrontRight = hardwareMap.dcMotor.get("rightFront");
         MotorBackLeft = hardwareMap.dcMotor.get("leftRear");
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
-        //liftLeft = hardwareMap.dcMotor.get("liftLeft");
-        //liftRight = hardwareMap.dcMotor.get("liftRight");
-        //spoolLift=hardwareMap.dcMotor.get("spoolLift");
         liftArm= hardwareMap.dcMotor.get("liftArm");
-        //liftLeft = hardwareMap.dcMotor.get("liftLeft");
-        //  liftRight = hardwareMap.dcMotor.get("liftRight");""
 //declare arm servo
         armServo = hardwareMap.servo.get("clawServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
-        //rotateServo = hardwareMap.servo.get("rotateServo");
 
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -84,8 +78,7 @@ public class samallteleop extends LinearOpMode {
         double speed = 0.6 * (gamepad1.left_trigger + 1) * (1 - gamepad1.right_trigger / 1.2);
 
 
-        armServo.setPosition(ARM_RETRACTED_POSITION);
-        //rotateServo.setPosition(CLAW_NEUTURAL);
+        //armServo.setPosition(ARM_RETRACTED_POSITION);
 
 //2
         waitForStart();
@@ -102,44 +95,20 @@ public class samallteleop extends LinearOpMode {
             MotorFrontRight.setPower(speedMultiplier * (drive + turn + strafe));
             MotorBackLeft.setPower(speedMultiplier * (drive - turn + strafe));
             MotorBackRight.setPower(speedMultiplier * (drive + turn - strafe));
-           //iftLeft.setPower(hang);
-           //iftRight.setPower(-hang);
             liftArm.setPower(lift/1.5);
 
 //claw rotation
-            if (gamepad2.a)
-            {
-                rotateServo.setPosition(CLAW_UP);
-            }
 
-            if (gamepad2.b)
-            {
-                rotateServo.setPosition(CLAW_DOWN);
-            }
-            /*if (gamepad2.right_bumper)
-            {
-                rotateServo.setPosition(CLAW_NEUTURAL);
-            }*/
-
-
-            //claw open and close
-            /*if (gamepad2.dpad_up){
-                spoolLift.setPower(1);
-            }else if (gamepad2.dpad_down){
-                spoolLift.setPower(-1);
-            }else {
-                spoolLift.setPower(0);
-            }*/
 
             if (gamepad2.x)
             {
-                servoPower+=0.1;
-                armServo.setPosition(1);
+                //servoPower+=0.1;
+                armServo.setPosition(CLAW_UP);
             }
             if (gamepad2.y)
             {
-                servoPower-=.1;
-                armServo.setPosition(0.1);
+                //servoPower-=.1;
+                armServo.setPosition(CLAW_DOWN);
             }
             if (gamepad2.dpad_up){
                 armServo.setPosition(CLAW_NEUTURAL);
