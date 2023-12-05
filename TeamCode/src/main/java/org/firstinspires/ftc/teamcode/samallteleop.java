@@ -31,8 +31,8 @@ public class samallteleop extends LinearOpMode {
 
     private static final double CLAW_NEUTURAL = 0;
 
-    private static final double ARM_RETRACTED_POSITION = 0.1;
-    private static final double ARM_EXTENDED_POSITION = 0.8;
+    private static final double CLAW_RETRACTED_POSITION = 0.1;
+    private static final double CLAW_EXTENDED_POSITION = 0.8;
 
 
     public void moveDriveTrain(){
@@ -78,7 +78,7 @@ public class samallteleop extends LinearOpMode {
         double speed = 0.6 * (gamepad1.left_trigger + 1) * (1 - gamepad1.right_trigger / 1.2);
 
 
-        //armServo.setPosition(ARM_RETRACTED_POSITION);
+        armServo.setPosition(CLAW_RETRACTED_POSITION);
 
 //2
         waitForStart();
@@ -102,13 +102,13 @@ public class samallteleop extends LinearOpMode {
 
             if (gamepad2.x)
             {
-                //servoPower+=0.1;
-                armServo.setPosition(CLAW_UP);
+                servoPower+=0.1;
+                armServo.setPosition(CLAW_RETRACTED_POSITION);
             }
             if (gamepad2.y)
             {
-                //servoPower-=.1;
-                armServo.setPosition(CLAW_DOWN);
+                servoPower-=.1;
+                armServo.setPosition(CLAW_EXTENDED_POSITION);
             }
             if (gamepad2.dpad_up){
                 armServo.setPosition(CLAW_NEUTURAL);
