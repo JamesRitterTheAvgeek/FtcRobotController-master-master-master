@@ -32,7 +32,7 @@ public class samallteleop extends LinearOpMode {
     private static final double CLAW_NEUTURAL = 0;
 
     private static final double CLAW_RETRACTED_POSITION = 0.1;
-    private static final double CLAW_EXTENDED_POSITION = 0.8;
+    private static final double CLAW_EXTENDED_POSITION = 0.6;
 
 
     public void moveDriveTrain(){
