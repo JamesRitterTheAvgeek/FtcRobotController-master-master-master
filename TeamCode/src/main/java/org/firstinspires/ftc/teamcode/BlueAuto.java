@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Autonomous(name = "Red Auto")
+@Autonomous(name = "Blue Auto")
 
 
-public class opencv extends LinearOpMode {
+public class BlueAuto extends LinearOpMode {
     public boolean right=false;
     public boolean middle=false;
     public boolean left=false;
@@ -153,7 +153,7 @@ public class opencv extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=956){
+                        if(fRposition*-1>=856){
 
 
                             ElapsedTime elapsedTime12= new ElapsedTime();
@@ -212,7 +212,7 @@ public class opencv extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=606){
+                        if(fRposition*-1>=426){
                             ElapsedTime elapsedTime12= new ElapsedTime();
                             MotorFrontLeft.setPower(0);
                             MotorFrontRight.setPower(0);
@@ -240,9 +240,9 @@ public class opencv extends LinearOpMode {
 
 
                             MotorFrontLeft.setPower(-1);
-                            MotorFrontRight.setPower(-0.5);
+                            MotorFrontRight.setPower(-0.6);
                             MotorBackLeft.setPower(-1);
-                            MotorBackRight.setPower(-0.5);
+                            MotorBackRight.setPower(-0.6);
                         }
                     }
                     right = true;
@@ -269,7 +269,7 @@ public class opencv extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=1006){
+                        if(fRposition*-1>=1096){
                             ElapsedTime elapsedTime12= new ElapsedTime();
                             MotorFrontLeft.setPower(0);
                             MotorFrontRight.setPower(0);
@@ -302,8 +302,6 @@ public class opencv extends LinearOpMode {
                             MotorBackRight.setPower(-1);
                         }
                     }
-
-
                     right = false;
                     left = true;
                     middle = false;
@@ -329,14 +327,6 @@ public class opencv extends LinearOpMode {
             fLposition=0;
             bRposition=0;
             bLposition=0;
-
-
-
-
-            MotorFrontLeft.setPower(0);
-            MotorFrontRight.setPower(0);
-            MotorBackLeft.setPower(0);
-            MotorBackRight.setPower(0);
 
 
             terminateOpModeNow();
@@ -425,8 +415,8 @@ public class opencv extends LinearOpMode {
             Imgproc.cvtColor(frame, hsvFrame, Imgproc.COLOR_BGR2HSV);
 
 
-            Scalar lowerYellow = new Scalar(100, 100, 100);
-            Scalar upperYellow = new Scalar(180, 255, 255);
+            Scalar lowerYellow = new Scalar(0,50,50);
+            Scalar upperYellow = new Scalar(30,255,255);
 
 
 
