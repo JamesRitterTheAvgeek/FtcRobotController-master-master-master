@@ -4,15 +4,25 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "autoRedBoard", group = "23274")
 public class autoRedBoard extends LinearOpMode {
+    private DcMotor MotorFrontRight;
+    private DcMotor MotorFrontLeft;
+    private DcMotor MotorBackRight;
+    private DcMotor MotorBackLeft;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        MotorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose = new Pose2d(12, -70, Math.toRadians(90));
