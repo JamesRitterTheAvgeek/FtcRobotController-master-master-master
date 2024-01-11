@@ -54,7 +54,7 @@ public class RedClose extends LinearOpMode {
     private Servo rotateServo;
     //plen
     private Servo planeLaunch;
-
+    private Servo autoServo;
 
     private OpenCvCamera controlHubCam;  // Use OpenCvCamera class from FTC SDK
     private static final int CAMERA_WIDTH = 640; // width  of wanted camera resolution
@@ -76,7 +76,7 @@ public class RedClose extends LinearOpMode {
         drop = hardwareMap.servo.get("dropServo");
         armServo = hardwareMap.servo.get("clawServo");
         liftArm=hardwareMap.dcMotor.get("liftArm");
-
+        autoServo=hardwareMap.servo.get("testServo");
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -154,7 +154,7 @@ public class RedClose extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition>=956){
+                        if(fRposition>=836){
 
 
                             ElapsedTime elapsedTime12= new ElapsedTime();
@@ -162,7 +162,6 @@ public class RedClose extends LinearOpMode {
                             MotorFrontRight.setPower(0);
                             MotorBackLeft.setPower(0);
                             MotorBackRight.setPower(0);
-                            armServo.setPosition(0.9);
 
                             while (elapsedTime12.seconds()<5){
                                 telemetry.addData("Location","middle");
@@ -222,7 +221,6 @@ public class RedClose extends LinearOpMode {
                             MotorBackRight.setPower(0);
 
 
-                            armServo.setPosition(0.9);
 
 
 
@@ -265,7 +263,7 @@ public class RedClose extends LinearOpMode {
                         fLposition=MotorFrontLeft.getCurrentPosition();
                         fRposition=MotorFrontRight.getCurrentPosition();
                         bRposition=MotorBackRight.getCurrentPosition();
-                        bLposition=MotorBackLeft.getCurrentPosition();
+
                         telemetry.addData("BR Position",bRposition);
                         telemetry.addData("BL Position",bLposition);
                         telemetry.addData("FR Position",fRposition);
@@ -279,7 +277,6 @@ public class RedClose extends LinearOpMode {
                             MotorBackRight.setPower(0);
 
 
-                            armServo.setPosition(0.9);
 
 
 
@@ -301,7 +298,7 @@ public class RedClose extends LinearOpMode {
                             MotorFrontLeft.setPower(0.5);
                             MotorFrontRight.setPower(1);
                             MotorBackLeft.setPower(0.5);
-                            MotorBackRight.setPower(1);
+
                         }
                     }
 
@@ -318,9 +315,7 @@ public class RedClose extends LinearOpMode {
             telemetry.addData("endOfcameraCode","endOfCamCode");
             telemetry.update();
 
-
-
-
+            autoServo.setPosition(1);
 
 
 
@@ -332,16 +327,27 @@ public class RedClose extends LinearOpMode {
             fLposition=0;
             bRposition=0;
             bLposition=0;
+            if(middle=true) {
+                telemetry.addData("mid,","true");
+            }else if (right){
+                telemetry.addData("right","");
+
+            }else {
+                telemetry.addData("left","");
+            }
             while(middle=true){
-                while(fLposition<400){
-                    telemetry.addData("encoder val mid:",fLposition);
+                while(bLposition<400){
+                    telemetry.addData("encoder val mid:",MotorBackLeft.getCurrentPosition());
                     MotorFrontLeft.setPower(0.3);
                     MotorFrontRight.setPower(-0.6);
                     MotorBackLeft.setPower(0.3);
                     MotorBackRight.setPower(-0.6);
+                    bLposition=MotorBackLeft.getCurrentPosition();
+
+
                     telemetry.update();
                 }
-                telemetry.update();
+
                     MotorFrontLeft.setPower(0);
                     MotorFrontRight.setPower(0);
                     MotorBackLeft.setPower(0);
@@ -349,13 +355,17 @@ public class RedClose extends LinearOpMode {
                     middle=false;
 
             } while (right=true) {
-                while(fLposition<400){
-                    telemetry.addData("encoder val right:",fLposition);
+                while(bLposition<400){
+                    telemetry.addData("encoder val right:",bLposition);
                     MotorFrontLeft.setPower(1);
                     MotorBackLeft.setPower(1);
                     MotorFrontRight.setPower(-1);
                     MotorBackRight.setPower(-1);
+                    bLposition=MotorBackLeft.getCurrentPosition();
+
                     telemetry.update();
+
+
                 }
                 MotorFrontLeft.setPower(0);
                 MotorFrontRight.setPower(0);
@@ -363,12 +373,14 @@ public class RedClose extends LinearOpMode {
                 MotorBackRight.setPower(0);
                 right=false;
             }while(left=true) {
-                while(fLposition*-1<400){
-                    telemetry.addData("encoder val left:",fLposition);
+                while(bLposition<400){
+                    telemetry.addData("encoder val left:",bLposition);
                     MotorFrontLeft.setPower(-1);
                     MotorBackLeft.setPower(-1);
                     MotorBackRight.setPower(0.3);
                     MotorFrontRight.setPower(0.3);
+
+                    bLposition=MotorBackLeft.getCurrentPosition();
                     telemetry.update();
                 }
 
@@ -390,6 +402,7 @@ public class RedClose extends LinearOpMode {
             while(armLift.seconds()<2.5){
                 liftArm.setPower(1);
             }
+
             liftArm.setPower(0);
             terminateOpModeNow();
 

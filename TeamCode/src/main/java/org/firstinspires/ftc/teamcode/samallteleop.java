@@ -33,7 +33,7 @@ public class samallteleop extends LinearOpMode {
 
     private static final double CLAW_RETRACTED_POSITION = 0.1;
     private static final double CLAW_EXTENDED_POSITION = 0.6;
-
+    public Servo autoServo;
 
     public void moveDriveTrain(){
         double vertical;
@@ -66,6 +66,7 @@ public class samallteleop extends LinearOpMode {
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
         liftArm= hardwareMap.dcMotor.get("liftArm");
 //declare arm servo
+        autoServo=hardwareMap.servo.get("testServo");
         armServo = hardwareMap.servo.get("clawServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
 
@@ -120,6 +121,7 @@ public class samallteleop extends LinearOpMode {
             if(gamepad2.right_bumper){
                 planeLaunch.setPosition(0);
             }
+
 
             // {
 

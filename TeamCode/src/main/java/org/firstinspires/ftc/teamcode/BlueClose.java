@@ -54,7 +54,7 @@ public class BlueClose extends LinearOpMode {
     private Servo rotateServo;
     //plen
     private Servo planeLaunch;
-
+    private Servo autoServo;
 
     private OpenCvCamera controlHubCam;  // Use OpenCvCamera class from FTC SDK
     private static final int CAMERA_WIDTH = 640; // width  of wanted camera resolution
@@ -75,7 +75,7 @@ public class BlueClose extends LinearOpMode {
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
         drop = hardwareMap.servo.get("dropServo");
         armServo = hardwareMap.servo.get("clawServo");
-
+        autoServo=hardwareMap.servo.get("testServo");
 
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -287,8 +287,7 @@ public class BlueClose extends LinearOpMode {
                             MotorBackRight.setPower(0);
 
 
-                            armServo.setPosition(0.9);
-
+                            autoServo.setPosition(1);
 
 
 
