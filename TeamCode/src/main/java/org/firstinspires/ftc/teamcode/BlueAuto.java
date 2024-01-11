@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Autonomous(name = "Blue Auto")
+@Autonomous(name = "Default Blue Auto")
 
 
 public class BlueAuto extends LinearOpMode {
