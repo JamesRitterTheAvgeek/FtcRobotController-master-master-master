@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Autonomous(name = "Default Red Auto")
+@Autonomous(name = "Close Red Auto")
 
 
-public class opencv extends LinearOpMode {
+public class RedClose extends LinearOpMode {
     public boolean right=false;
     public boolean middle=false;
     public boolean left=false;
@@ -54,7 +54,7 @@ public class opencv extends LinearOpMode {
     private Servo rotateServo;
     //plen
     private Servo planeLaunch;
-
+    private Servo autoServo;
 
     private OpenCvCamera controlHubCam;  // Use OpenCvCamera class from FTC SDK
     private static final int CAMERA_WIDTH = 640; // width  of wanted camera resolution
@@ -65,7 +65,7 @@ public class opencv extends LinearOpMode {
     public static final double objectWidthInRealWorldUnits = 3.75;  // Replace with the actual width of the object in real-world units
     public static final double focalLength = 728;  // Replace with the focal length of the camera in pixels
     public Servo drop;
-
+    public DcMotor liftArm;
 
     @Override
     public void runOpMode() {
@@ -75,8 +75,8 @@ public class opencv extends LinearOpMode {
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
         drop = hardwareMap.servo.get("dropServo");
         armServo = hardwareMap.servo.get("clawServo");
-
-
+        liftArm=hardwareMap.dcMotor.get("liftArm");
+        autoServo=hardwareMap.servo.get("testServo");
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -105,6 +105,7 @@ public class opencv extends LinearOpMode {
         MotorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
         MotorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // Turn the motor back on when we are done
         int fLposition = MotorBackRight.getCurrentPosition();
+
         waitForStart();
 
 
@@ -134,9 +135,9 @@ public class opencv extends LinearOpMode {
 
             }
             while (true) {
-                if (cX > 250 && cX < 350) {
+                if (cX > 250 && cX < 450) {
                     telemetry.addData("Location", "Middle");
-                    while (elapsedTime.seconds() < 8) {
+                    while (elapsedTime.seconds() < 4) {
 
 
                     }
@@ -153,7 +154,7 @@ public class opencv extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=956){
+                        if(fRposition>=836){
 
 
                             ElapsedTime elapsedTime12= new ElapsedTime();
@@ -161,7 +162,7 @@ public class opencv extends LinearOpMode {
                             MotorFrontRight.setPower(0);
                             MotorBackLeft.setPower(0);
                             MotorBackRight.setPower(0);
-                            armServo.setPosition(0.9);
+
                             while (elapsedTime12.seconds()<5){
                                 telemetry.addData("Location","middle");
                             }
@@ -178,10 +179,10 @@ public class opencv extends LinearOpMode {
                         }else{
 
 
-                            MotorFrontLeft.setPower(-0.8);
-                            MotorFrontRight.setPower(-1);
-                            MotorBackLeft.setPower(-0.8);
-                            MotorBackRight.setPower(-1);
+                            MotorFrontLeft.setPower(1);
+                            MotorFrontRight.setPower(1);
+                            MotorBackLeft.setPower(1);
+                            MotorBackRight.setPower(1);
                         }
                     }
 
@@ -195,9 +196,9 @@ public class opencv extends LinearOpMode {
                     break;
 
 
-                } else if (cX > 370) {
+                } else if (cX > 400) {
                     telemetry.addData("Location", "Right");
-                    while (elapsedTime.seconds() < 8) {
+                    while (elapsedTime.seconds() < 4) {
 
 
                     }
@@ -212,7 +213,7 @@ public class opencv extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=606){
+                        if(fRposition>=1306){
                             ElapsedTime elapsedTime12= new ElapsedTime();
                             MotorFrontLeft.setPower(0);
                             MotorFrontRight.setPower(0);
@@ -220,7 +221,6 @@ public class opencv extends LinearOpMode {
                             MotorBackRight.setPower(0);
 
 
-                            armServo.setPosition(0.9);
 
 
 
@@ -239,10 +239,10 @@ public class opencv extends LinearOpMode {
                         }else{
 
 
-                            MotorFrontLeft.setPower(-1);
-                            MotorFrontRight.setPower(-0.5);
-                            MotorBackLeft.setPower(-1);
-                            MotorBackRight.setPower(-0.5);
+                            MotorFrontLeft.setPower(1);
+                            MotorFrontRight.setPower(0.5);
+                            MotorBackLeft.setPower(1);
+                            MotorBackRight.setPower(0.5);
                         }
                     }
                     right = true;
@@ -254,7 +254,7 @@ public class opencv extends LinearOpMode {
 
                 } else {
                     telemetry.addData("Location", "Left");
-                    while (elapsedTime.seconds() < 8) {
+                    while (elapsedTime.seconds() < 4) {
 
 
                     }
@@ -263,13 +263,13 @@ public class opencv extends LinearOpMode {
                         fLposition=MotorFrontLeft.getCurrentPosition();
                         fRposition=MotorFrontRight.getCurrentPosition();
                         bRposition=MotorBackRight.getCurrentPosition();
-                        bLposition=MotorBackLeft.getCurrentPosition();
+
                         telemetry.addData("BR Position",bRposition);
                         telemetry.addData("BL Position",bLposition);
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=1006){
+                        if(fRposition>=1306){
                             ElapsedTime elapsedTime12= new ElapsedTime();
                             MotorFrontLeft.setPower(0);
                             MotorFrontRight.setPower(0);
@@ -277,7 +277,6 @@ public class opencv extends LinearOpMode {
                             MotorBackRight.setPower(0);
 
 
-                            armServo.setPosition(0.9);
 
 
 
@@ -296,10 +295,10 @@ public class opencv extends LinearOpMode {
                         }else{
 
 
-                            MotorFrontLeft.setPower(-0.5);
-                            MotorFrontRight.setPower(-1);
-                            MotorBackLeft.setPower(-0.5);
-                            MotorBackRight.setPower(-1);
+                            MotorFrontLeft.setPower(0.5);
+                            MotorFrontRight.setPower(1);
+                            MotorBackLeft.setPower(0.5);
+
                         }
                     }
 
@@ -313,11 +312,10 @@ public class opencv extends LinearOpMode {
 
                 }
             }
+            telemetry.addData("endOfcameraCode","endOfCamCode");
+            telemetry.update();
 
-
-
-
-
+            autoServo.setPosition(1);
 
 
 
@@ -329,8 +327,69 @@ public class opencv extends LinearOpMode {
             fLposition=0;
             bRposition=0;
             bLposition=0;
+            if(middle=true) {
+                telemetry.addData("mid,","true");
+            }else if (right){
+                telemetry.addData("right","");
+
+            }else {
+                telemetry.addData("left","");
+            }
+            while(middle=true){
+                while(bLposition<400){
+                    telemetry.addData("encoder val mid:",MotorBackLeft.getCurrentPosition());
+                    MotorFrontLeft.setPower(0.3);
+                    MotorFrontRight.setPower(-0.6);
+                    MotorBackLeft.setPower(0.3);
+                    MotorBackRight.setPower(-0.6);
+                    bLposition=MotorBackLeft.getCurrentPosition();
 
 
+                    telemetry.update();
+                }
+
+                    MotorFrontLeft.setPower(0);
+                    MotorFrontRight.setPower(0);
+                    MotorBackLeft.setPower(0);
+                    MotorBackRight.setPower(0);
+                    middle=false;
+
+            } while (right=true) {
+                while(bLposition<400){
+                    telemetry.addData("encoder val right:",bLposition);
+                    MotorFrontLeft.setPower(1);
+                    MotorBackLeft.setPower(1);
+                    MotorFrontRight.setPower(-1);
+                    MotorBackRight.setPower(-1);
+                    bLposition=MotorBackLeft.getCurrentPosition();
+
+                    telemetry.update();
+
+
+                }
+                MotorFrontLeft.setPower(0);
+                MotorFrontRight.setPower(0);
+                MotorBackLeft.setPower(0);
+                MotorBackRight.setPower(0);
+                right=false;
+            }while(left=true) {
+                while(bLposition<400){
+                    telemetry.addData("encoder val left:",bLposition);
+                    MotorFrontLeft.setPower(-1);
+                    MotorBackLeft.setPower(-1);
+                    MotorBackRight.setPower(0.3);
+                    MotorFrontRight.setPower(0.3);
+
+                    bLposition=MotorBackLeft.getCurrentPosition();
+                    telemetry.update();
+                }
+
+                MotorFrontLeft.setPower(0);
+                MotorFrontRight.setPower(0);
+                MotorBackLeft.setPower(0);
+                MotorBackRight.setPower(0);
+                left=false;
+            }
 
 
             MotorFrontLeft.setPower(0);
@@ -338,7 +397,13 @@ public class opencv extends LinearOpMode {
             MotorBackLeft.setPower(0);
             MotorBackRight.setPower(0);
 
+            telemetry.addData("moveForward", "thenLiftandPlace");
+            ElapsedTime armLift = new ElapsedTime();
+            while(armLift.seconds()<2.5){
+                liftArm.setPower(1);
+            }
 
+            liftArm.setPower(0);
             terminateOpModeNow();
 
 
