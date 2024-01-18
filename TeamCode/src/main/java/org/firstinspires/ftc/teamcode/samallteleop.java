@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 @TeleOp(name = "smallteleop", group = "teleop")
 public class samallteleop extends LinearOpMode {
     //motors
@@ -20,6 +22,7 @@ public class samallteleop extends LinearOpMode {
     //claw
     private Servo pushBot;
     private Servo armServo;
+    public Servo dropServo;
     private Servo rotateServo;
     //plen
     private Servo planeLaunch;
@@ -30,10 +33,10 @@ public class samallteleop extends LinearOpMode {
     private static final double CLAW_DOWN = 1;
 
     private static final double CLAW_NEUTURAL = 0;
-
+    private DcMotor intakeMotor;
     private static final double CLAW_RETRACTED_POSITION = 0.1;
     private static final double CLAW_EXTENDED_POSITION = 0.6;
-
+    public Servo autoServo;
 
     public void moveDriveTrain(){
         double vertical;
@@ -65,7 +68,10 @@ public class samallteleop extends LinearOpMode {
         MotorBackLeft = hardwareMap.dcMotor.get("leftRear");
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
         liftArm= hardwareMap.dcMotor.get("liftArm");
+        dropServo=hardwareMap.servo.get("dropServo");
+        intakeMotor=hardwareMap.dcMotor.get("intakeMotor");
 //declare arm servo
+        autoServo=hardwareMap.servo.get("testServo");
         armServo = hardwareMap.servo.get("clawServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
 
@@ -89,14 +95,16 @@ public class samallteleop extends LinearOpMode {
             double drive = gamepad1.left_stick_y;
             double speedMultiplier = .4 *((1-gamepad1.left_trigger*.8)+(1+gamepad1.right_trigger*.6));
             double servoPower=0;
-            double lift=gamepad2.right_stick_y;
+
+            intakeMotor.setPower(gamepad2.left_stick_y*1.5);
             //forward and backward
             MotorFrontLeft.setPower(speedMultiplier * (drive - turn - strafe));
             MotorFrontRight.setPower(speedMultiplier * (drive + turn + strafe));
             MotorBackLeft.setPower(speedMultiplier * (drive - turn + strafe));
             MotorBackRight.setPower(speedMultiplier * (drive + turn - strafe));
-            liftArm.setPower(lift/1.5);
-
+            if (gamepad2.dpad_down) {
+                liftArm.setPower(gamepad2.right_stick_y);
+            }
 //claw rotation
 
 
@@ -120,7 +128,26 @@ public class samallteleop extends LinearOpMode {
             if(gamepad2.right_bumper){
                 planeLaunch.setPosition(0);
             }
+            if(gamepad2.a){
+                dropServo.setPosition(1);
+            } else if (gamepad2.b) {
+                dropServo.setPosition(0);
+            }
+            double x=0;
+            if (gamepad1.dpad_down){
+                ElapsedTime ma =new ElapsedTime();
+                while (ma.seconds()<1){
 
+                }
+                autoServo.setPosition(1);
+
+            } else if (gamepad1.dpad_up) {
+                ElapsedTime ma =new ElapsedTime();
+                while (ma.seconds()<1){
+
+                }
+                autoServo.setPosition(0);
+            }
             // {
 
             // }

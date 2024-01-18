@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Autonomous(name = "Default Blue Auto")
+@Autonomous(name = "AML3 Blue Auto")
 
 
 public class BlueAuto extends LinearOpMode {
@@ -66,7 +66,7 @@ public class BlueAuto extends LinearOpMode {
     public static final double focalLength = 728;  // Replace with the focal length of the camera in pixels
     public Servo drop;
 
-
+    private Servo autoServo;
     @Override
     public void runOpMode() {
         MotorFrontLeft = hardwareMap.dcMotor.get("leftFront");
@@ -75,7 +75,7 @@ public class BlueAuto extends LinearOpMode {
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
         drop = hardwareMap.servo.get("dropServo");
         armServo = hardwareMap.servo.get("clawServo");
-
+        autoServo=hardwareMap.servo.get("testServo");
 
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -134,9 +134,10 @@ public class BlueAuto extends LinearOpMode {
 
             }
             while (true) {
-                if (cX > 250 && cX < 350) {
+                if (cX > 250 && cX < 400) {
                     telemetry.addData("Location", "Middle");
-                    while (elapsedTime.seconds() < 8) {
+                    telemetry.update();
+                    while (elapsedTime.seconds() < 5) {
 
 
                     }
@@ -153,7 +154,7 @@ public class BlueAuto extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=856){
+                        if(fRposition>=896){
 
 
                             ElapsedTime elapsedTime12= new ElapsedTime();
@@ -161,9 +162,16 @@ public class BlueAuto extends LinearOpMode {
                             MotorFrontRight.setPower(0);
                             MotorBackLeft.setPower(0);
                             MotorBackRight.setPower(0);
-                            armServo.setPosition(0.9);
-                            while (elapsedTime12.seconds()<5){
+                            ElapsedTime elapsedTimel = new ElapsedTime();
+                            while (elapsedTimel.seconds()<1) {
+                                autoServo.setPosition(0);
+                            }
+                            while (elapsedTime12.seconds()<3){
                                 telemetry.addData("Location","middle");
+                                MotorFrontLeft.setPower(-0.2);
+                                MotorFrontRight.setPower(-0.2);
+                                MotorBackLeft.setPower(-0.2);
+                                MotorBackRight.setPower(-0.2);
                             }
 
 
@@ -178,10 +186,10 @@ public class BlueAuto extends LinearOpMode {
                         }else{
 
 
-                            MotorFrontLeft.setPower(-0.8);
-                            MotorFrontRight.setPower(-1);
-                            MotorBackLeft.setPower(-0.8);
-                            MotorBackRight.setPower(-1);
+                            MotorFrontLeft.setPower(1);
+                            MotorFrontRight.setPower(1);
+                            MotorBackLeft.setPower(1);
+                            MotorBackRight.setPower(1);
                         }
                     }
 
@@ -195,14 +203,16 @@ public class BlueAuto extends LinearOpMode {
                     break;
 
 
-                } else if (cX > 370) {
+                } else if (cX > 400) {
                     telemetry.addData("Location", "Right");
-                    while (elapsedTime.seconds() < 8) {
+                    telemetry.update();
+                    while (elapsedTime.seconds() < 5) {
 
 
                     }
                     while (true){
                         telemetry.addData("location","Right");
+                        telemetry.update();
                         fLposition=MotorFrontLeft.getCurrentPosition();
                         fRposition=MotorFrontRight.getCurrentPosition();
                         bRposition=MotorBackRight.getCurrentPosition();
@@ -212,21 +222,29 @@ public class BlueAuto extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=426){
+                        if(fRposition>=1556){
                             ElapsedTime elapsedTime12= new ElapsedTime();
                             MotorFrontLeft.setPower(0);
                             MotorFrontRight.setPower(0);
                             MotorBackLeft.setPower(0);
                             MotorBackRight.setPower(0);
+                            ElapsedTime elapsedTimel = new ElapsedTime();
+                            while (elapsedTimel.seconds()<1) {
+                                autoServo.setPosition(0);
+                            }
 
 
-                            armServo.setPosition(0.9);
 
 
 
 
-                            while (elapsedTime12.seconds()<5){
-                                telemetry.addData("location","right");
+
+                            while (elapsedTime12.seconds()<3){
+                                telemetry.addData("Location","right");
+                                MotorFrontLeft.setPower(-0.2);
+                                MotorFrontRight.setPower(-0.2);
+                                MotorBackLeft.setPower(-0.2);
+                                MotorBackRight.setPower(-0.2);
                             }
 
 
@@ -239,10 +257,10 @@ public class BlueAuto extends LinearOpMode {
                         }else{
 
 
-                            MotorFrontLeft.setPower(-1);
-                            MotorFrontRight.setPower(-0.6);
-                            MotorBackLeft.setPower(-1);
-                            MotorBackRight.setPower(-0.6);
+                            MotorFrontLeft.setPower(0.5);
+                            MotorFrontRight.setPower(1);
+                            MotorBackLeft.setPower(0.5);
+                            MotorBackRight.setPower(1);
                         }
                     }
                     right = true;
@@ -254,6 +272,7 @@ public class BlueAuto extends LinearOpMode {
 
                 } else {
                     telemetry.addData("Location", "Left");
+                    telemetry.update();
                     while (elapsedTime.seconds() < 8) {
 
 
@@ -269,7 +288,7 @@ public class BlueAuto extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=1096){
+                        if(fRposition>=800){
                             ElapsedTime elapsedTime12= new ElapsedTime();
                             MotorFrontLeft.setPower(0);
                             MotorFrontRight.setPower(0);
@@ -277,13 +296,21 @@ public class BlueAuto extends LinearOpMode {
                             MotorBackRight.setPower(0);
 
 
-                            armServo.setPosition(0.9);
+                            ElapsedTime elapsedTimel = new ElapsedTime();
+                            while (elapsedTimel.seconds()<1) {
+                                autoServo.setPosition(0);
+                            }
 
 
 
 
-                            while (elapsedTime12.seconds()<5){
-                                telemetry.addData("location","left");
+
+                            while (elapsedTime12.seconds()<3){
+                                telemetry.addData("Location","left");
+                                MotorFrontLeft.setPower(0);
+                                MotorFrontRight.setPower(-0.2);
+                                MotorBackLeft.setPower(-0.2);
+                                MotorBackRight.setPower(-0.2);
                             }
 
 
@@ -296,10 +323,11 @@ public class BlueAuto extends LinearOpMode {
                         }else{
 
 
-                            MotorFrontLeft.setPower(-0.5);
-                            MotorFrontRight.setPower(-1);
-                            MotorBackLeft.setPower(-0.5);
-                            MotorBackRight.setPower(-1);
+
+                            MotorFrontLeft.setPower(1);
+                            MotorFrontRight.setPower(0.6);
+                            MotorBackLeft.setPower(1);
+                            MotorBackRight.setPower(0.6);
                         }
                     }
                     right = false;
