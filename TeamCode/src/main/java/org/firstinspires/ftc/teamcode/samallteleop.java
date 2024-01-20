@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -23,6 +24,7 @@ public class samallteleop extends LinearOpMode {
     private Servo rotateServo;
     //plen
     private Servo planeLaunch;
+    private CRServo rollThing;
 
     private static final double PLEN_LAUNCH = 1;
     private static final double CLAW_UP = 0;
@@ -68,6 +70,8 @@ public class samallteleop extends LinearOpMode {
 //declare arm servo
         armServo = hardwareMap.servo.get("clawServo");
         planeLaunch=hardwareMap.servo.get("coolPlen");
+//roll thing idk kinda wierd dont know what to call it spin thing ig idk this is just a comment that is about a spin thingy
+        rollThing = hardwareMap.crservo.get("rollThing");
 
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -124,15 +128,15 @@ public class samallteleop extends LinearOpMode {
             if(gamepad2.right_stick_y < 0){
                 armServo.setPosition(CLAW_RETRACTED_POSITION);
             }
-            // {
 
-            // }
-            //stupid slide stuff
-            // Left side motor for lift
+//roll thing idk kinda wierd dont know what to call it spin thing ig idk this is just a comment that is about a spin thingy
+            if(gamepad2.a){
+                rollThing.setPower(1);
 
-            // RIGHT SIDE MOTOR FOR LIFT
-
-
+            }
+            if (gamepad2.b){
+                rollThing.setPower(0);
+            }
         }
     }
 }
