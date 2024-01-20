@@ -179,7 +179,7 @@ public class RedClose extends LinearOpMode {
                             }
                             MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
                             MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                            while(bRposition<400){
+                            while(bRposition<600){
 
 
 

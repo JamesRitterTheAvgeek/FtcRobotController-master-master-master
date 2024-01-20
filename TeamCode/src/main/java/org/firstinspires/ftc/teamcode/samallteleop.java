@@ -69,6 +69,7 @@ public class samallteleop extends LinearOpMode {
         liftArm= hardwareMap.dcMotor.get("liftArm");
 //declare arm servo
         armServo = hardwareMap.servo.get("clawServo");
+
         planeLaunch=hardwareMap.servo.get("coolPlen");
 //roll thing idk kinda wierd dont know what to call it spin thing ig idk this is just a comment that is about a spin thingy
         rollThing = hardwareMap.crservo.get("rollThing");
