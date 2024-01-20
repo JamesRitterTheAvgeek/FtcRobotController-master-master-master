@@ -121,10 +121,12 @@ public class samallteleop extends LinearOpMode {
                 planeLaunch.setPosition(0);
             }
 
-            if(gamepad2.right_stick_y > 0.3){
+            if(gamepad2.right_stick_y > 0.4){
+                armServo.setPosition(CLAW_EXTENDED_POSITION);
+            } else if (gamepad2.right_stick_y == 0) {
                 armServo.setPosition(CLAW_EXTENDED_POSITION);
             }
-            if (gamepad2.right_stick_y < 0.3){
+            if (gamepad2.right_stick_y < 0.4){
                 armServo.setPosition(CLAW_RETRACTED_POSITION);
             }
             // {
