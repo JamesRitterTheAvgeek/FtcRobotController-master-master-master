@@ -99,7 +99,7 @@ public class samallteleop extends LinearOpMode {
 
 //claw rotation
 
-
+            //heeeyyyyy
             if (gamepad2.x)
             {
                 servoPower+=0.1;
@@ -121,12 +121,7 @@ public class samallteleop extends LinearOpMode {
                 planeLaunch.setPosition(0);
             }
 
-            if(gamepad2.right_stick_y > 0.4){
-                armServo.setPosition(CLAW_EXTENDED_POSITION);
-            } else if (gamepad2.right_stick_y == 0) {
-                armServo.setPosition(CLAW_EXTENDED_POSITION);
-            }
-            if (gamepad2.right_stick_y < 0.4){
+            if(gamepad2.right_stick_y < 0){
                 armServo.setPosition(CLAW_RETRACTED_POSITION);
             }
             // {
