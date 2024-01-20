@@ -168,29 +168,31 @@ public class RedClose extends LinearOpMode {
                             MotorFrontRight.setPower(0);
                             MotorBackLeft.setPower(0);
                             MotorBackRight.setPower(0);
-                            autoServo.setPosition(0);
-                            bLposition=0;
+
+                            bRposition=0;
                             ElapsedTime elapsedTime12= new ElapsedTime();
                             while (elapsedTime12.seconds()<2){
-
+                                autoServo.setPosition(0);
                                 telemetry.addData("if","wait");
 
                                 telemetry.update();
                             }
-                            while(bLposition*-1<400){
-                                MotorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
-                                MotorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                            MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                            MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                            while(bRposition<400){
+
 
 
 
 
                                 telemetry.update();
-                                telemetry.addData("encoder val mid:",MotorBackLeft.getCurrentPosition());
-                                MotorFrontLeft.setPower(-0.6);
+                                telemetry.addData("encoder val mid:",MotorBackRight.getCurrentPosition());
+                                MotorFrontRight.setPower(0.6);
+                                MotorBackRight.setPower(0.6);
                                 MotorBackLeft.setPower(-0.6);
-
+                                MotorFrontLeft.setPower(-0.6);
                                 liftArm.setPower(1);
-                                bLposition=MotorBackLeft.getCurrentPosition();
+                                bRposition=MotorBackRight.getCurrentPosition();
                                 telemetry.update();
                             }
                             MotorFrontLeft.setPower(0);
@@ -198,7 +200,7 @@ public class RedClose extends LinearOpMode {
                             MotorBackLeft.setPower(0);
                             MotorBackRight.setPower(0);
                             liftArm.setPower(0);
-                            armServo.setPosition(1);
+                            armServo.setPosition(0);
                             terminateOpModeNow();
                             break;
 
