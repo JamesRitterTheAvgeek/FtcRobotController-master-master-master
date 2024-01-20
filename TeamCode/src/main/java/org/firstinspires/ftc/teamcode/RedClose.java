@@ -75,13 +75,13 @@ public class RedClose extends LinearOpMode {
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
         drop = hardwareMap.servo.get("dropServo");
         armServo = hardwareMap.servo.get("clawServo");
-        liftArm=hardwareMap.dcMotor.get("liftArm");
+        liftArm=hardwareMap.dcMotor.get("intakeMotor");
         autoServo=hardwareMap.servo.get("testServo");
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-
+        int deleteVal= 0;
 
         //liftLeft = hardwareMap.dcMotor.get("liftLeft");
         //  liftRight = hardwareMap.dcMotor.get("liftRight");""
@@ -138,11 +138,11 @@ public class RedClose extends LinearOpMode {
             middle=false;
             right=false;
             left=false;
-           while (true) {
+
                 if (cX > 250 && cX < 450) {
                     telemetry.addData("Location", "Middle");
 
-                    while (fRposition<=836){
+                    while (true){
 
                         telemetry.addData("location","middle");
                         telemetry.update();
@@ -150,7 +150,7 @@ public class RedClose extends LinearOpMode {
                         fLposition=MotorFrontLeft.getCurrentPosition();
                         fRposition=MotorFrontRight.getCurrentPosition();
                         bRposition=MotorBackRight.getCurrentPosition();
-
+                        bLposition=MotorBackLeft.getCurrentPosition();
                         telemetry.addData("BR Position",bRposition);
                         telemetry.addData("BL Position",bLposition);
                         telemetry.addData("FR Position",fRposition);
@@ -158,33 +158,49 @@ public class RedClose extends LinearOpMode {
                         telemetry.update();
                         if(fRposition>=836){
 
+                            telemetry.addData("if statement","start");
+                            telemetry.update();
+                            if (checkLoop){
 
-
+                            }
+                            checkLoop=false;
                             MotorFrontLeft.setPower(0);
                             MotorFrontRight.setPower(0);
                             MotorBackLeft.setPower(0);
                             MotorBackRight.setPower(0);
-                            checkLoop=false;
-                            while(bLposition<400){
-                                ElapsedTime elapsedTime12= new ElapsedTime();
-                                while (elapsedTime12.seconds()<2){
+                            autoServo.setPosition(0);
+                            bLposition=0;
+                            ElapsedTime elapsedTime12= new ElapsedTime();
+                            while (elapsedTime12.seconds()<2){
 
-                                }
+                                telemetry.addData("if","wait");
 
-                                bLposition=MotorBackLeft.getCurrentPosition();
+                                telemetry.update();
+                            }
+                            while(bLposition*-1<400){
+                                MotorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                                MotorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+
+
                                 telemetry.update();
                                 telemetry.addData("encoder val mid:",MotorBackLeft.getCurrentPosition());
-                                MotorFrontLeft.setPower(0.3);
-                                MotorFrontRight.setPower(-0.6);
-                                MotorBackLeft.setPower(0.3);
-                                MotorBackRight.setPower(-0.6);
+                                MotorFrontLeft.setPower(-0.6);
+                                MotorBackLeft.setPower(-0.6);
+
                                 liftArm.setPower(1);
                                 bLposition=MotorBackLeft.getCurrentPosition();
                                 telemetry.update();
                             }
+                            MotorFrontLeft.setPower(0);
+                            MotorFrontRight.setPower(0);
+                            MotorBackLeft.setPower(0);
+                            MotorBackRight.setPower(0);
                             liftArm.setPower(0);
                             armServo.setPosition(1);
-
+                            terminateOpModeNow();
+                            break;
 
 
 
@@ -200,9 +216,9 @@ public class RedClose extends LinearOpMode {
                             telemetry.addData("FR Position",fRposition);
                             telemetry.addData("FL Position",fLposition);
                             telemetry.update();
-                            MotorFrontLeft.setPower(1);
+                            MotorFrontLeft.setPower(0.8);
                             MotorFrontRight.setPower(1);
-                            MotorBackLeft.setPower(1);
+                            MotorBackLeft.setPower(0.8);
                             MotorBackRight.setPower(1);
                         }
                     }
@@ -237,20 +253,37 @@ public class RedClose extends LinearOpMode {
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
                         if(fRposition>=1306){
-                            ElapsedTime elapsedTime12= new ElapsedTime();
+
                             MotorFrontLeft.setPower(0);
                             MotorFrontRight.setPower(0);
                             MotorBackLeft.setPower(0);
                             MotorBackRight.setPower(0);
+                            autoServo.setPosition(0);
+                            checkLoop=false;
+                            while(bLposition<400){
+                                ElapsedTime elapsedTime12= new ElapsedTime();
+                                while (elapsedTime12.seconds()<2){
 
+                                }
 
-
-
-
-
-
-
-
+                                bLposition=MotorBackLeft.getCurrentPosition();
+                                telemetry.update();
+                                telemetry.addData("encoder val mid:",MotorBackLeft.getCurrentPosition());
+                                MotorFrontLeft.setPower(0.3);
+                                MotorFrontRight.setPower(-0.5);
+                                MotorBackLeft.setPower(0.3);
+                                MotorBackRight.setPower(-0.5);
+                                liftArm.setPower(1);
+                                bLposition=MotorBackLeft.getCurrentPosition();
+                                telemetry.update();
+                            }
+                            MotorFrontLeft.setPower(0);
+                            MotorFrontRight.setPower(0);
+                            MotorBackLeft.setPower(0);
+                            MotorBackRight.setPower(0);
+                            liftArm.setPower(0);
+                            armServo.setPosition(1);
+                            break;
 
 
                         }else{
@@ -327,11 +360,6 @@ public class RedClose extends LinearOpMode {
                 }
 
 
-         }
-            telemetry.addData("endOfcameraCode","endOfCamCode");
-            telemetry.update();
-
-            autoServo.setPosition(1);
 
 
 
@@ -339,86 +367,6 @@ public class RedClose extends LinearOpMode {
 
 
 
-            fRposition=0;
-            fLposition=0;
-            bRposition=0;
-            bLposition=0;
-            if(middle=true) {
-                telemetry.addData("mid,","true");
-                telemetry.update();
-            }else if (right){
-                telemetry.addData("right","");
-                telemetry.update();
-
-            }else if(left) {
-                telemetry.addData("left","");
-                telemetry.update();
-            }else {
-                telemetry.addData("bug","bug");
-                telemetry.update();
-            }
-            while(middle=true){
-
-
-                    MotorFrontLeft.setPower(0);
-                    MotorFrontRight.setPower(0);
-                    MotorBackLeft.setPower(0);
-                    MotorBackRight.setPower(0);
-                    middle=false;
-
-            } while (right=true) {
-                while(bLposition<400){
-                    telemetry.addData("encoder val right:",bLposition);
-                    MotorFrontLeft.setPower(1);
-                    MotorBackLeft.setPower(1);
-                    MotorFrontRight.setPower(-1);
-                    MotorBackRight.setPower(-1);
-                    bLposition=MotorBackLeft.getCurrentPosition();
-
-                    telemetry.update();
-
-
-                }
-
-                liftArm.setPower(1);
-                MotorFrontLeft.setPower(0);
-                MotorFrontRight.setPower(0);
-                MotorBackLeft.setPower(0);
-                MotorBackRight.setPower(0);
-                right=false;
-            }while(left=true) {
-                while(bLposition<400){
-                    telemetry.addData("encoder val left:",bLposition);
-                    MotorFrontLeft.setPower(-1);
-                    MotorBackLeft.setPower(-1);
-                    MotorBackRight.setPower(0.3);
-                    MotorFrontRight.setPower(0.3);
-
-                    bLposition=MotorBackLeft.getCurrentPosition();
-                    telemetry.update();
-                }
-
-                MotorFrontLeft.setPower(0);
-                MotorFrontRight.setPower(0);
-                MotorBackLeft.setPower(0);
-                MotorBackRight.setPower(0);
-                left=false;
-            }
-
-
-            MotorFrontLeft.setPower(0);
-            MotorFrontRight.setPower(0);
-            MotorBackLeft.setPower(0);
-            MotorBackRight.setPower(0);
-
-            telemetry.addData("moveForward", "thenLiftandPlace");
-            ElapsedTime armLift = new ElapsedTime();
-            while(armLift.seconds()<2.5){
-                liftArm.setPower(1);
-            }
-
-            liftArm.setPower(0);
-            terminateOpModeNow();
 
 
             // The OpenCV pipeline automatically processes frames and handles detection
