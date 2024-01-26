@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Autonomous(name = "Close Blue Auto")
+@Autonomous(name = "Close Red Auto")
 
 
 public class BlueClose extends LinearOpMode {
@@ -65,7 +65,7 @@ public class BlueClose extends LinearOpMode {
     public static final double objectWidthInRealWorldUnits = 3.75;  // Replace with the actual width of the object in real-world units
     public static final double focalLength = 728;  // Replace with the focal length of the camera in pixels
     public Servo drop;
-
+    public DcMotor liftArm;
 
     @Override
     public void runOpMode() {
@@ -75,13 +75,13 @@ public class BlueClose extends LinearOpMode {
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
         drop = hardwareMap.servo.get("dropServo");
         armServo = hardwareMap.servo.get("clawServo");
+        liftArm=hardwareMap.dcMotor.get("intakeMotor");
         autoServo=hardwareMap.servo.get("testServo");
-
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         MotorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-
+        int deleteVal= 0;
 
         //liftLeft = hardwareMap.dcMotor.get("liftLeft");
         //  liftRight = hardwareMap.dcMotor.get("liftRight");""
@@ -105,6 +105,7 @@ public class BlueClose extends LinearOpMode {
         MotorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
         MotorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // Turn the motor back on when we are done
         int fLposition = MotorBackRight.getCurrentPosition();
+
         waitForStart();
 
 
@@ -133,192 +134,361 @@ public class BlueClose extends LinearOpMode {
 
 
             }
-            while (true) {
+            boolean checkLoop =true;
+            middle=false;
+            right=false;
+            left=false;
 
-                if (cX > 250 && cX < 350) {
-                    telemetry.addData("Location", "Middle");
-                    while (elapsedTime.seconds() < 8) {
+            if (cX > 250 && cX < 450) {
+                telemetry.addData("Location", "Middle");
 
+                while (true){
 
-                    }
-                    middle=true;
-                    left=false;
-                    right =false;
-                    while (true){
-                        telemetry.addData("location","middle");
+                    telemetry.addData("location","middle");
+                    telemetry.update();
 
+                    fLposition=MotorFrontLeft.getCurrentPosition();
+                    fRposition=MotorFrontRight.getCurrentPosition();
+                    bRposition=MotorBackRight.getCurrentPosition();
+                    bLposition=MotorBackLeft.getCurrentPosition();
+                    telemetry.addData("BR Position",bRposition);
+                    telemetry.addData("BL Position",bLposition);
+                    telemetry.addData("FR Position",fRposition);
+                    telemetry.addData("FL Position",fLposition);
+                    telemetry.update();
+                    if(fRposition>=936){
 
-                        fLposition=MotorFrontLeft.getCurrentPosition();
-                        fRposition=MotorFrontRight.getCurrentPosition();
-                        bRposition=MotorBackRight.getCurrentPosition();
-                        bLposition=MotorBackLeft.getCurrentPosition();
-                        telemetry.addData("BR Position",bRposition);
-                        telemetry.addData("BL Position",bLposition);
-                        telemetry.addData("FR Position",fRposition);
-                        telemetry.addData("FL Position",fLposition);
+                        telemetry.addData("if statement","start");
                         telemetry.update();
-                        if(fRposition*-1>=1456){
+                        if (checkLoop){
 
-
-                            ElapsedTime elapsedTime12= new ElapsedTime();
-                            MotorFrontLeft.setPower(0);
-                            MotorFrontRight.setPower(0);
-                            MotorBackLeft.setPower(0);
-                            MotorBackRight.setPower(0);
-                            armServo.setPosition(0.9);
-                            while (elapsedTime12.seconds()<5){
-                                telemetry.addData("Location","middle");
-                            }
-
-
-
-
-                            telemetry.addData("BR Position",bRposition);
-                            telemetry.addData("BL Position",bLposition);
-                            telemetry.addData("FR Position",fRposition);
-                            telemetry.addData("FL Position",fLposition);
-                            telemetry.update();
-                            break;
-                        }else{
-
-
-                            MotorFrontLeft.setPower(0.8);
-                            MotorFrontRight.setPower(1);
-                            MotorBackLeft.setPower(0.8);
-                            MotorBackRight.setPower(1);
                         }
-                    }
+                        checkLoop=false;
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
 
+                        bRposition=0;
+                        ElapsedTime elapsedTime12= new ElapsedTime();
+                        while (elapsedTime12.seconds()<2){
+                            autoServo.setPosition(0);
+                            telemetry.addData("if","wait");
 
-                    controlHubCam.stopStreaming();
-
-
-                    middle = true;
-                    left = false;
-                    right = false;
-                    break;
-
-
-                } else if (cX > 370) {
-                    telemetry.addData("Location", "Right");
-                    while (elapsedTime.seconds() < 8) {
-
-
-                    }
-                    middle=false;
-                    left=false;
-                    right =true;
-                    while (true){
-                        telemetry.addData("location","Right");
-                        fLposition=MotorFrontLeft.getCurrentPosition();
-                        fRposition=MotorFrontRight.getCurrentPosition();
-                        bRposition=MotorBackRight.getCurrentPosition();
-                        bLposition=MotorBackLeft.getCurrentPosition();
-                        telemetry.addData("BR Position",bRposition);
-                        telemetry.addData("BL Position",bLposition);
-                        telemetry.addData("FR Position",fRposition);
-                        telemetry.addData("FL Position",fLposition);
-                        telemetry.update();
-                        if(fRposition*-1>=1026){
-                            ElapsedTime elapsedTime12= new ElapsedTime();
-                            MotorFrontLeft.setPower(0);
-                            MotorFrontRight.setPower(0);
-                            MotorBackLeft.setPower(0);
-                            MotorBackRight.setPower(0);
-
-
-                            armServo.setPosition(0.9);
-
-
-
-
-                            while (elapsedTime12.seconds()<5){
-                                telemetry.addData("location","right");
-                            }
-
-
-                            telemetry.addData("BR Position",bRposition);
-                            telemetry.addData("BL Position",bLposition);
-                            telemetry.addData("FR Position",fRposition);
-                            telemetry.addData("FL Position",fLposition);
                             telemetry.update();
-                            break;
-                        }else{
+                        }
+                        MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        while(bRposition<1050){
 
 
-                            MotorFrontLeft.setPower(1);
+
+
+
+                            telemetry.update();
+                            telemetry.addData("encoder val mid:",MotorBackRight.getCurrentPosition());
                             MotorFrontRight.setPower(0.6);
-                            MotorBackLeft.setPower(1);
                             MotorBackRight.setPower(0.6);
+                            MotorBackLeft.setPower(-0.6);
+                            MotorFrontLeft.setPower(-0.6);
+                            liftArm.setPower(1);
+                            bRposition=MotorBackRight.getCurrentPosition();
+                            telemetry.update();
                         }
-                    }
-                    right = true;
-                    left = false;
-                    middle = false;
-                    controlHubCam.stopStreaming();
-                    break;
+                        MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                        bRposition=0;
+                        while (bRposition<=1100){
+                            telemetry.addData("encoder val mid:",MotorBackRight.getCurrentPosition());
+                            MotorFrontRight.setPower(0.6);
+                            MotorBackRight.setPower(0.6);
+                            MotorBackLeft.setPower(0.6);
+                            MotorFrontLeft.setPower(0.6);
+                            liftArm.setPower(1);
+                            bRposition=MotorBackRight.getCurrentPosition();
+                            telemetry.update();
+                        }
+                        armServo.setPosition(0);
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
+                        liftArm.setPower(0);
+
+                        break;
 
 
-                } else {
-                    telemetry.addData("Location", "Left");
-                    while (elapsedTime.seconds() < 8) {
 
 
-                    }
-                    middle=false;
-                    left=true;
-                    right =false;
-                    while (true){
-                        telemetry.addData("location","Left");
-                        fLposition=MotorFrontLeft.getCurrentPosition();
-                        fRposition=MotorFrontRight.getCurrentPosition();
-                        bRposition=MotorBackRight.getCurrentPosition();
-                        bLposition=MotorBackLeft.getCurrentPosition();
+
+
+
+
+                    }else{
+
                         telemetry.addData("BR Position",bRposition);
                         telemetry.addData("BL Position",bLposition);
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        if(fRposition*-1>=1596){
-                            ElapsedTime elapsedTime12= new ElapsedTime();
-                            MotorFrontLeft.setPower(0);
-                            MotorFrontRight.setPower(0);
-                            MotorBackLeft.setPower(0);
-                            MotorBackRight.setPower(0);
-
-
-                            autoServo.setPosition(1);
-
-
-
-                            while (elapsedTime12.seconds()<5){
-                                telemetry.addData("location","left");
-                            }
-
-
-                            telemetry.addData("BR Position",bRposition);
-                            telemetry.addData("BL Position",bLposition);
-                            telemetry.addData("FR Position",fRposition);
-                            telemetry.addData("FL Position",fLposition);
-                            telemetry.update();
-                            break;
-                        }else{
-
-
-                            MotorFrontLeft.setPower(0.5);
-                            MotorFrontRight.setPower(1);
-                            MotorBackLeft.setPower(0.5);
-                            MotorBackRight.setPower(1);
-                        }
+                        MotorFrontLeft.setPower(0.8);
+                        MotorFrontRight.setPower(1);
+                        MotorBackLeft.setPower(0.8);
+                        MotorBackRight.setPower(1);
                     }
-                    right = false;
-                    left = true;
-                    middle = false;
-                    controlHubCam.stopStreaming();
-                    break;
+                }
+
+
+                controlHubCam.stopStreaming();
+
+
+                middle = true;
+                left = false;
+                right = false;
+                checkLoop=false;
+                break;
+
+
+            } else if (cX > 400) {
+                telemetry.addData("Location", "Right");
+                while (elapsedTime.seconds() < 4) {
 
 
                 }
+                while (true){
+                    telemetry.addData("location","Right");
+                    telemetry.update();
+                    fLposition=MotorFrontLeft.getCurrentPosition();
+                    fRposition=MotorFrontRight.getCurrentPosition();
+                    bRposition=MotorBackRight.getCurrentPosition();
+                    bLposition=MotorBackLeft.getCurrentPosition();
+                    telemetry.addData("BR Position",bRposition);
+                    telemetry.addData("BL Position",bLposition);
+                    telemetry.addData("FR Position",fRposition);
+                    telemetry.addData("FL Position",fLposition);
+                    telemetry.update();
+                    if(fRposition>=1306){
+                        telemetry.addData("if statement","start");
+                        telemetry.update();
+                        if (checkLoop){
+
+                        }
+                        checkLoop=false;
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
+
+                        bRposition=0;
+                        ElapsedTime elapsedTime12= new ElapsedTime();
+                        while (elapsedTime12.seconds()<2){
+                            autoServo.setPosition(0);
+                            telemetry.addData("if","wait right");
+
+                            telemetry.update();
+                        }
+                        MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        while(bRposition<650){
+
+
+
+
+
+                            telemetry.update();
+                            telemetry.addData("encoder val mid:",MotorBackRight.getCurrentPosition());
+                            MotorFrontRight.setPower(0.6);
+                            MotorBackRight.setPower(0.6);
+                            MotorBackLeft.setPower(-0.6);
+                            MotorFrontLeft.setPower(-0.6);
+                            liftArm.setPower(1);
+                            bRposition=MotorBackRight.getCurrentPosition();
+                            telemetry.update();
+                        }
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
+                        MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                        bRposition=0;
+                        while (bRposition<=850){
+                            telemetry.addData("encoder val mid:",MotorBackRight.getCurrentPosition());
+                            MotorFrontRight.setPower(0.6);
+                            MotorBackRight.setPower(0.6);
+                            MotorBackLeft.setPower(0.6);
+                            MotorFrontLeft.setPower(0.6);
+                            liftArm.setPower(1);
+                            bRposition=MotorBackRight.getCurrentPosition();
+                            telemetry.update();
+                        }
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
+                        liftArm.setPower(0);
+                        armServo.setPosition(0);
+
+                        break;
+
+
+                    }else{
+
+                        telemetry.addData("BR Position",bRposition);
+                        telemetry.addData("BL Position",bLposition);
+                        telemetry.addData("FR Position",fRposition);
+                        telemetry.addData("FL Position",fLposition);
+                        telemetry.update();
+                        MotorFrontLeft.setPower(0.5);
+                        MotorFrontRight.setPower(1);
+                        MotorBackLeft.setPower(0.5);
+                        MotorBackRight.setPower(1);
+                    }
+                }
+                right = true;
+                left = false;
+                middle = false;
+                controlHubCam.stopStreaming();
+                checkLoop=false;
+                break;
+
+
+            } else {
+                telemetry.addData("Location", "Left");
+                telemetry.update();
+                while (elapsedTime.seconds() < 4) {
+
+
+                }
+                while (true) {
+                    telemetry.addData("location", "Left");
+                    fLposition = MotorFrontLeft.getCurrentPosition();
+                    fRposition = MotorFrontRight.getCurrentPosition();
+                    bRposition = MotorBackRight.getCurrentPosition();
+
+                    telemetry.addData("BR Position", bRposition);
+                    telemetry.addData("BL Position", bLposition);
+                    telemetry.addData("FR Position", fRposition);
+                    telemetry.addData("FL Position", fLposition);
+                    telemetry.update();
+                    if (fRposition >= 450) {
+
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
+                        ElapsedTime elapsedTime12 = new ElapsedTime();
+                        while (elapsedTime12.seconds()<5){
+
+                            telemetry.addData("if","wait left");
+
+                            telemetry.update();
+                        }
+
+
+                        MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        bRposition=MotorBackRight.getCurrentPosition();
+                        MotorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                        MotorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        telemetry.addData("BR Position", bRposition);
+                        bRposition=0;
+                        while(bRposition<900){
+
+                            telemetry.addData("turn val", bRposition);
+                            telemetry.update();
+                            MotorFrontLeft.setPower(-1);
+                            MotorBackLeft.setPower(-1);
+                            MotorBackRight.setPower(1);
+                            MotorFrontRight.setPower(1);
+                            bRposition=MotorBackRight.getCurrentPosition();
+
+                        }
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
+                        MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        bRposition=0;
+                        ElapsedTime elapsedTime11 = new ElapsedTime();
+                        while (bRposition*-1<=650){
+                            MotorBackLeft.setPower(-1);
+                            MotorBackRight.setPower(-1);
+                            MotorFrontLeft.setPower(-1);
+                            MotorFrontRight.setPower(-1);
+
+                            bRposition=MotorBackRight.getCurrentPosition();
+                        }
+                        autoServo.setPosition(1);
+                        autoServo.setPosition(0);
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
+                        MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
+                        MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        while (elapsedTime11.seconds()<2){
+
+                            telemetry.addData("if","Move forward");
+
+                            telemetry.update();
+                        }
+                        while (bRposition<900){
+                            MotorBackLeft.setPower(1);
+                            MotorBackRight.setPower(1);
+                            MotorFrontLeft.setPower(1);
+                            MotorFrontRight.setPower(1);
+                            liftArm.setPower(1);
+                            bRposition=MotorBackRight.getCurrentPosition();
+
+                        }
+                        liftArm.setPower(0);
+                        MotorFrontLeft.setPower(0);
+                        MotorFrontRight.setPower(0);
+                        MotorBackLeft.setPower(0);
+                        MotorBackRight.setPower(0);
+                        armServo.setPosition(0);
+                        armServo.setPosition(1);
+                        ElapsedTime elapsedTime1 = new ElapsedTime();
+                        while (elapsedTime1.seconds()<2){
+                            autoServo.setPosition(0);
+                            telemetry.addData("if","wait place");
+
+                            telemetry.update();
+                        }
+                        break;
+
+
+                    } else {
+
+                        telemetry.addData("BR Position", bRposition);
+                        telemetry.addData("BL Position", bLposition);
+                        telemetry.addData("FR Position", fRposition);
+                        telemetry.addData("FL Position", fLposition);
+                        telemetry.update();
+                        MotorFrontLeft.setPower(1);
+                        MotorFrontRight.setPower(1);
+                        MotorBackLeft.setPower(1);
+                        MotorBackRight.setPower(1);
+
+                    }
+
+                }
+
+
+                right = false;
+                left = true;
+                middle = false;
+                controlHubCam.stopStreaming();
+                checkLoop = false;
+                telemetry.addData("strafeHere","");
+                telemetry.update();
+                break;
+
+
             }
 
 
@@ -329,41 +499,10 @@ public class BlueClose extends LinearOpMode {
 
 
 
-
-
-
-            fRposition=0;
-            fLposition=0;
-            bRposition=0;
-            bLposition=0;
-
-            if(middle=true){
-                while(fLposition<400){
-                    telemetry.addData("encoder val:",fLposition);
-                    MotorFrontLeft.setPower(0.3);
-                    MotorFrontRight.setPower(0.6);
-                    MotorBackLeft.setPower(0.3);
-                    MotorBackRight.setPower(0.6);
-                }
-                MotorFrontLeft.setPower(0);
-                MotorFrontRight.setPower(0);
-                MotorBackLeft.setPower(0);
-                MotorBackRight.setPower(0);
-            } else if (right=true) {
-                while(fLposition<400){
-                    telemetry.addData("encoder val:",fLposition);
-                    MotorFrontLeft.setPower(1);
-                    MotorBackLeft.setPower(1);
-
-                }
-            }else {
-                MotorFrontLeft.setPower(-1);
-                MotorBackLeft.setPower(-1);
-            }
-            terminateOpModeNow();
 
 
             // The OpenCV pipeline automatically processes frames and handles detection
+
         }
 
 
@@ -446,8 +585,8 @@ public class BlueClose extends LinearOpMode {
             Imgproc.cvtColor(frame, hsvFrame, Imgproc.COLOR_BGR2HSV);
 
 
-            Scalar lowerYellow = new Scalar(0,50,50);
-            Scalar upperYellow = new Scalar(30,255,255);
+            Scalar lowerYellow = new Scalar(0, 50, 50);
+            Scalar upperYellow = new Scalar(30, 255, 255);
 
 
 

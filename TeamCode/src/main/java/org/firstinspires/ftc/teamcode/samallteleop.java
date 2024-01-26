@@ -30,12 +30,12 @@ public class samallteleop extends LinearOpMode {
     private static final double CLAW_UP = 0;
 
     private static final double CLAW_DOWN = 1;
-
+    private Servo drop ;
     private static final double CLAW_NEUTURAL = 0;
 
     private static final double CLAW_RETRACTED_POSITION = 0.1;
     private static final double CLAW_EXTENDED_POSITION = 0.6;
-
+    private DcMotor intakeM;
 
     public void moveDriveTrain(){
         double vertical;
@@ -67,12 +67,15 @@ public class samallteleop extends LinearOpMode {
         MotorBackLeft = hardwareMap.dcMotor.get("leftRear");
         MotorBackRight = hardwareMap.dcMotor.get("rightRear");
         liftArm= hardwareMap.dcMotor.get("liftArm");
+        intakeM=hardwareMap.dcMotor.get("intakeMotor");
 //declare arm servo
+        drop = hardwareMap.servo.get("dropServo");
+
         armServo = hardwareMap.servo.get("clawServo");
 
         planeLaunch=hardwareMap.servo.get("coolPlen");
 //roll thing idk kinda wierd dont know what to call it spin thing ig idk this is just a comment that is about a spin thingy
-        rollThing = hardwareMap.crservo.get("rollThing");
+
 
         MotorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         MotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -95,13 +98,14 @@ public class samallteleop extends LinearOpMode {
             double speedMultiplier = .4 *((1-gamepad1.left_trigger*.8)+(1+gamepad1.right_trigger*.6));
             double servoPower=0;
             double lift=gamepad2.right_stick_y;
+
             //forward and backward
             MotorFrontLeft.setPower(speedMultiplier * (drive - turn - strafe));
             MotorFrontRight.setPower(speedMultiplier * (drive + turn + strafe));
             MotorBackLeft.setPower(speedMultiplier * (drive - turn + strafe));
             MotorBackRight.setPower(speedMultiplier * (drive + turn - strafe));
             liftArm.setPower(lift/1.5);
-
+            intakeM.setPower(gamepad2.left_stick_y);
 //claw rotation
 
             //heeeyyyyy
@@ -132,11 +136,11 @@ public class samallteleop extends LinearOpMode {
 
 //roll thing idk kinda wierd dont know what to call it spin thing ig idk this is just a comment that is about a spin thingy
             if(gamepad2.a){
-                rollThing.setPower(1);
+                drop.setPosition(0);
 
             }
             if (gamepad2.b){
-                rollThing.setPower(0);
+                drop.setPosition(1);
             }
         }
     }
