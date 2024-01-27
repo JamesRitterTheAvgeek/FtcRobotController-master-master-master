@@ -231,11 +231,12 @@ public class RedClose extends LinearOpMode {
                             MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                             bRposition=0;
                             ElapsedTime elo=new ElapsedTime();
+
                             while (elo.seconds()<1.5){
-                                MotorFrontLeft.setPower(1);
-                                MotorFrontRight.setPower(-1);
-                                MotorBackLeft.setPower(-1);
-                                MotorBackRight.setPower(1);
+                                MotorFrontLeft.setPower(0.4);
+                                MotorFrontRight.setPower(-0.4);
+                                MotorBackLeft.setPower(-0.4);
+                                MotorBackRight.setPower(0.4);
                                 bRposition=MotorBackRight.getCurrentPosition();
                             }
                             terminateOpModeNow();
@@ -354,15 +355,14 @@ public class RedClose extends LinearOpMode {
                             MotorBackRight.setPower(0);
                             liftArm.setPower(0);
                             armServo.setPosition(0);
-                            MotorFrontLeft.setPower(0);
-                            MotorFrontRight.setPower(0);
-                            MotorBackLeft.setPower(0);
-                            MotorBackRight.setPower(0);
+                            ElapsedTime stop = new ElapsedTime();
+                            while (stop.seconds()<2){
 
+                            }
                             MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
                             MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                             ElapsedTime elo=new ElapsedTime();
-                            while (elo.seconds()<1.5){
+                            while (elo.seconds()<.5){
                                 MotorFrontLeft.setPower(1);
                                 MotorFrontRight.setPower(-1);
                                 MotorBackLeft.setPower(-1);
