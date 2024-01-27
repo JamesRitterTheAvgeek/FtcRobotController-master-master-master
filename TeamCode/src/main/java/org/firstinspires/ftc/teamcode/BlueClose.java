@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Autonomous(name = "Close Red Auto")
+@Autonomous(name = "Close Blue Auto")
 
 
 public class BlueClose extends LinearOpMode {
@@ -156,7 +156,7 @@ public class BlueClose extends LinearOpMode {
                     telemetry.addData("FR Position",fRposition);
                     telemetry.addData("FL Position",fLposition);
                     telemetry.update();
-                    if(fRposition>=936){
+                    if(fRposition>=636){
 
                         telemetry.addData("if statement","start");
                         telemetry.update();
@@ -179,7 +179,7 @@ public class BlueClose extends LinearOpMode {
                         }
                         MotorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset the motor encoder
                         MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                        while(bRposition<1050){
+                        while(bRposition*-1<1050){
 
 
 
@@ -187,10 +187,10 @@ public class BlueClose extends LinearOpMode {
 
                             telemetry.update();
                             telemetry.addData("encoder val mid:",MotorBackRight.getCurrentPosition());
-                            MotorFrontRight.setPower(0.6);
-                            MotorBackRight.setPower(0.6);
-                            MotorBackLeft.setPower(-0.6);
-                            MotorFrontLeft.setPower(-0.6);
+                            MotorFrontRight.setPower(-0.6);
+                            MotorBackRight.setPower(-0.6);
+                            MotorBackLeft.setPower(0.6);
+                            MotorFrontLeft.setPower(0.6);
                             liftArm.setPower(1);
                             bRposition=MotorBackRight.getCurrentPosition();
                             telemetry.update();
@@ -215,7 +215,14 @@ public class BlueClose extends LinearOpMode {
                         MotorBackLeft.setPower(0);
                         MotorBackRight.setPower(0);
                         liftArm.setPower(0);
-
+                        ElapsedTime elo=new ElapsedTime();
+                        while (elo.seconds()<1.5){
+                            MotorFrontLeft.setPower(-1);
+                            MotorFrontRight.setPower(1);
+                            MotorBackLeft.setPower(1);
+                            MotorBackRight.setPower(-1);
+                            bRposition=MotorBackRight.getCurrentPosition();
+                        }
                         break;
 
 
@@ -232,9 +239,9 @@ public class BlueClose extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        MotorFrontLeft.setPower(0.8);
+                        MotorFrontLeft.setPower(1);
                         MotorFrontRight.setPower(1);
-                        MotorBackLeft.setPower(0.8);
+                        MotorBackLeft.setPower(1);
                         MotorBackRight.setPower(1);
                     }
                 }
@@ -268,7 +275,7 @@ public class BlueClose extends LinearOpMode {
                     telemetry.addData("FR Position",fRposition);
                     telemetry.addData("FL Position",fLposition);
                     telemetry.update();
-                    if(fRposition>=1306){
+                    if(fRposition>=1006){
                         telemetry.addData("if statement","start");
                         telemetry.update();
                         if (checkLoop){
@@ -297,11 +304,11 @@ public class BlueClose extends LinearOpMode {
 
 
                             telemetry.update();
-                            telemetry.addData("encoder val mid:",MotorBackRight.getCurrentPosition());
-                            MotorFrontRight.setPower(0.6);
-                            MotorBackRight.setPower(0.6);
-                            MotorBackLeft.setPower(-0.6);
-                            MotorFrontLeft.setPower(-0.6);
+                            telemetry.addData("encoder val right:",MotorBackRight.getCurrentPosition());
+                            MotorFrontRight.setPower(-0.6);
+                            MotorBackRight.setPower(-0.6);
+                            MotorBackLeft.setPower(0.6);
+                            MotorFrontLeft.setPower(0.6);
                             liftArm.setPower(1);
                             bRposition=MotorBackRight.getCurrentPosition();
                             telemetry.update();
@@ -315,7 +322,7 @@ public class BlueClose extends LinearOpMode {
 
                         bRposition=0;
                         while (bRposition<=850){
-                            telemetry.addData("encoder val mid:",MotorBackRight.getCurrentPosition());
+                            telemetry.addData("encoder val right:",MotorBackRight.getCurrentPosition());
                             MotorFrontRight.setPower(0.6);
                             MotorBackRight.setPower(0.6);
                             MotorBackLeft.setPower(0.6);
@@ -330,6 +337,14 @@ public class BlueClose extends LinearOpMode {
                         MotorBackRight.setPower(0);
                         liftArm.setPower(0);
                         armServo.setPosition(0);
+                        ElapsedTime elo=new ElapsedTime();
+                        while (elo.seconds()<1.5){
+                            MotorFrontLeft.setPower(1);
+                            MotorFrontRight.setPower(-1);
+                            MotorBackLeft.setPower(-1);
+                            MotorBackRight.setPower(1);
+                            bRposition=MotorBackRight.getCurrentPosition();
+                        }
 
                         break;
 
@@ -341,10 +356,10 @@ public class BlueClose extends LinearOpMode {
                         telemetry.addData("FR Position",fRposition);
                         telemetry.addData("FL Position",fLposition);
                         telemetry.update();
-                        MotorFrontLeft.setPower(0.5);
-                        MotorFrontRight.setPower(1);
-                        MotorBackLeft.setPower(0.5);
-                        MotorBackRight.setPower(1);
+                        MotorFrontLeft.setPower(1);
+                        MotorFrontRight.setPower(0.5);
+                        MotorBackLeft.setPower(1);
+                        MotorBackRight.setPower(0.5);
                     }
                 }
                 right = true;
@@ -395,14 +410,14 @@ public class BlueClose extends LinearOpMode {
                         MotorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         telemetry.addData("BR Position", bRposition);
                         bRposition=0;
-                        while(bRposition<900){
+                        while(bRposition<550){
 
                             telemetry.addData("turn val", bRposition);
                             telemetry.update();
-                            MotorFrontLeft.setPower(-1);
-                            MotorBackLeft.setPower(-1);
-                            MotorBackRight.setPower(1);
-                            MotorFrontRight.setPower(1);
+                            MotorFrontLeft.setPower(1);
+                            MotorBackLeft.setPower(1);
+                            MotorBackRight.setPower(-1);
+                            MotorFrontRight.setPower(-1);
                             bRposition=MotorBackRight.getCurrentPosition();
 
                         }
@@ -414,7 +429,7 @@ public class BlueClose extends LinearOpMode {
                         MotorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         bRposition=0;
                         ElapsedTime elapsedTime11 = new ElapsedTime();
-                        while (bRposition*-1<=650){
+                        while (bRposition*-1<=100){
                             MotorBackLeft.setPower(-1);
                             MotorBackRight.setPower(-1);
                             MotorFrontLeft.setPower(-1);
@@ -436,29 +451,8 @@ public class BlueClose extends LinearOpMode {
 
                             telemetry.update();
                         }
-                        while (bRposition<900){
-                            MotorBackLeft.setPower(1);
-                            MotorBackRight.setPower(1);
-                            MotorFrontLeft.setPower(1);
-                            MotorFrontRight.setPower(1);
-                            liftArm.setPower(1);
-                            bRposition=MotorBackRight.getCurrentPosition();
 
-                        }
-                        liftArm.setPower(0);
-                        MotorFrontLeft.setPower(0);
-                        MotorFrontRight.setPower(0);
-                        MotorBackLeft.setPower(0);
-                        MotorBackRight.setPower(0);
-                        armServo.setPosition(0);
-                        armServo.setPosition(1);
-                        ElapsedTime elapsedTime1 = new ElapsedTime();
-                        while (elapsedTime1.seconds()<2){
-                            autoServo.setPosition(0);
-                            telemetry.addData("if","wait place");
 
-                            telemetry.update();
-                        }
                         break;
 
 
@@ -470,9 +464,9 @@ public class BlueClose extends LinearOpMode {
                         telemetry.addData("FL Position", fLposition);
                         telemetry.update();
                         MotorFrontLeft.setPower(1);
-                        MotorFrontRight.setPower(1);
+                        MotorFrontRight.setPower(0.5);
                         MotorBackLeft.setPower(1);
-                        MotorBackRight.setPower(1);
+                        MotorBackRight.setPower(0.5);
 
                     }
 

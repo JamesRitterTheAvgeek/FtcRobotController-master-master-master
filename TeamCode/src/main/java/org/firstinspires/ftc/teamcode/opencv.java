@@ -136,7 +136,7 @@ public class opencv extends LinearOpMode {
             while (true) {
                 if (cX > 250 && cX < 350) {
                     telemetry.addData("Location", "Middle");
-                    while (elapsedTime.seconds() < 8) {
+                    while (elapsedTime.seconds() < 3) {
 
 
                     }
@@ -197,7 +197,7 @@ public class opencv extends LinearOpMode {
 
                 } else if (cX > 370) {
                     telemetry.addData("Location", "Right");
-                    while (elapsedTime.seconds() < 8) {
+                    while (elapsedTime.seconds() < 3) {
 
 
                     }
@@ -254,7 +254,7 @@ public class opencv extends LinearOpMode {
 
                 } else {
                     telemetry.addData("Location", "Left");
-                    while (elapsedTime.seconds() < 8) {
+                    while (elapsedTime.seconds() < 3) {
 
 
                     }
